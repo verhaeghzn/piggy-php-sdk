@@ -1,0 +1,31 @@
+{
+    "name": "piggy/piggy-php-sdk",
+    "description": "php sdk piggy",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mike Edinger",
+            "email": "mike@piggy.nl"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Piggy\\Api\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/",
+            "Tests\\Piggy\\Api\\": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=7.2",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.2"
+    }
+}
