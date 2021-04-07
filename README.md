@@ -1,29 +1,29 @@
-# README #
+# Piggy PHP SDK #
+With [Piggy's](https://www.piggy.eu/) all-in-one platform you can strengthen loyalty and automate every step. From reward programs, to branded giftcards and smart email marketing - Piggy takes care of it all. 
 
-This README would normally document whatever steps are necessary to get your application up and running.
+## Setup ##
 
-### What is this repository for? ###
+<b>Composer:</b>
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+```composer require "piggy/piggy-php-sdk"```
 
-### How do I get set up? ###
+## Quickstart ##
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+<b>Example with Register Client</b>
+```
+$apiKey = 'xxxx-xxxx-xxxx';
 
-### Contribution guidelines ###
+$client = new Piggy\Api\RegisterClient($apiKey);
+```
 
-* Writing tests
-* Code review
-* Other guidelines
+<b>Example with OAuth Client</b>
+```
+$clientId = 'xxxx';
+$clientSecret = 'xxxxxxxxxxx';
 
-### Who do I talk to? ###
+$client = new Piggy\Api\OAuthClient($clientId, $clientSecret);
 
-* Repo owner or admin
-* Other community or team contact
+$access_token = $client->getAccessToken();    
+
+$client->setAccessToken($access_token);
+```
