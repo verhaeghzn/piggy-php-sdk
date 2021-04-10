@@ -1,7 +1,5 @@
 image: php:7.2-alpine
 
-clone:
-  depth: full
 pipelines:
   default:
     - step:
@@ -15,6 +13,8 @@ pipelines:
           - vendor/bin/phpunit
     - step:
         name: Sync repo to GitHub
+        clone:
+          depth: full
         script:
           - apk update && apk add git
           - apk update && apk add openssh-client
