@@ -10,7 +10,7 @@ use Piggy\Api\Resources\OAuth\WebshopsResource;
 
 /**
  * Trait SetsOAuthResources
- * @package Piggy\Api\Traits
+ * @package Piggy\Api\Http\Traits
  */
 trait SetsOAuthResources
 {

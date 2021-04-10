@@ -1,23 +1,23 @@
 <?php
 
-namespace Piggy\Api\Mappers;
+namespace Piggy\Api\Mappers\Shops;
 
 /**
  * Class WebshopsMapper
- * @package Piggy\Api\Mappers
+ * @package Piggy\Api\Mappers\Shops
  */
 class WebshopsMapper
 {
     /**
-     * @param $response
+     * @param $data
      * @return array
      */
-    public function map($response): array
+    public function map($data): array
     {
-        $webshops = [];
         $webshopMapper = new WebshopMapper();
 
-        foreach ($response as $item) {
+        $webshops = [];
+        foreach ($data as $item) {
             $webshops[] = $webshopMapper->map($item);
         }
 

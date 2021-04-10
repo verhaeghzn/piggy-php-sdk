@@ -1,12 +1,12 @@
 <?php
 
-namespace Piggy\Api\Mappers;
+namespace Piggy\Api\Mappers\Loyalty;
 
 use Piggy\Api\Models\StagedCreditReception;
 
 /**
  * Class StagedCreditReceptionMapper
- * @package Piggy\Api\Mappers
+ * @package Piggy\Api\Mappers\Loyalty
  */
 class StagedCreditReceptionMapper
 {

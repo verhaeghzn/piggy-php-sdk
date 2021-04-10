@@ -7,7 +7,7 @@ use Piggy\Api\Resources\Customer\ProfileResource;
 
 /**
  * Trait SetsCustomerResources
- * @package Piggy\Api\Traits
+ * @package Piggy\Api\Http\Traits
  */
 trait SetsCustomerResources
 {

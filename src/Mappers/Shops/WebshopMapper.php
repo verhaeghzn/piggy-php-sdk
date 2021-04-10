@@ -1,6 +1,6 @@
 <?php
 
-namespace Piggy\Api\Mappers;
+namespace Piggy\Api\Mappers\Shops;
 
 use Piggy\Api\Models\Webshop;
 
@@ -16,7 +16,11 @@ class WebshopMapper
      */
     public function map($data): Webshop
     {
-        $webshop = new Webshop($data->id, $data->name);
+        $webshop = new Webshop(
+            $data->id,
+            $data->name
+        );
+
         return $webshop;
     }
 }

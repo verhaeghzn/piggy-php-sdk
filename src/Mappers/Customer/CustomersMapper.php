@@ -1,23 +1,23 @@
 <?php
 
-namespace Piggy\Api\Mappers;
+namespace Piggy\Api\Mappers\Customer;
 
 /**
  * Class CustomersMapper
- * @package Piggy\Api\Mappers
+ * @package Piggy\Api\Mappers\Customer
  */
 class CustomersMapper
 {
     /**
-     * @param $response
+     * @param $data
      * @return array
      */
-    public function map($response): array
+    public function map($data): array
     {
-        $customers = [];
         $customerMapper = new CustomerMapper();
 
-        foreach ($response as $item) {
+        $customers = [];
+        foreach ($data as $item) {
             $customers[] = $customerMapper->map($item);
         }
 

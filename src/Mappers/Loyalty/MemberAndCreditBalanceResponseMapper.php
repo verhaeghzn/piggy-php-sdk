@@ -1,6 +1,6 @@
 <?php
 
-namespace Piggy\Api\Mappers;
+namespace Piggy\Api\Mappers\Loyalty;
 
 use Piggy\Api\Models\MemberResponse;
 

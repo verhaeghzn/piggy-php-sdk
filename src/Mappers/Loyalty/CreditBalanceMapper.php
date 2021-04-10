@@ -1,13 +1,13 @@
 <?php
 
-namespace Piggy\Api\Mappers;
+namespace Piggy\Api\Mappers\Loyalty;
 
 use Piggy\Api\Models\CreditBalance;
 use Piggy\Api\Models\Member;
 
 /**
  * Class CreditBalanceMapper
- * @package Piggy\Api\Mappers
+ * @package Piggy\Api\Mappers\Loyalty
  */
 class CreditBalanceMapper
 {
@@ -18,8 +18,6 @@ class CreditBalanceMapper
      */
     public function map(Member $member, object $data): CreditBalance
     {
-        $creditBalance = new CreditBalance($member, $data->balance);
-
-        return $creditBalance;
+        return new CreditBalance($member, $data->balance);
     }
 }

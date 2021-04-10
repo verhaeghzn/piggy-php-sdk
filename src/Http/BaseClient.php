@@ -49,7 +49,6 @@ abstract class BaseClient
      * @param $endpoint
      * @param array $queryOptions
      * @return Response
-     * @throws BadResponseException
      * @throws RequestException
      */
     public function request($method, $endpoint, $queryOptions = []): Response
@@ -88,16 +87,14 @@ abstract class BaseClient
         }
 
         if (!property_exists($content, "data")) {
-            throw new BadResponseException("Invalid response given. Data was missing from response");
+            throw new BadResponseException("Invalid response given. Data property was missing from response.");
         }
 
         if (!property_exists($content, "meta")) {
-            throw new BadResponseException("Invalid response given. Meta was missing from response");
+            throw new BadResponseException("Invalid response given. Meta property was missing from response.");
         }
 
-        $response = new Response($content->data, $content->meta);
-
-        return $response;
+        return new Response($content->data, $content->meta);
     }
 
     /**
@@ -177,7 +174,6 @@ abstract class BaseClient
      * @param string $url
      * @param array $body
      * @return Response
-     * @throws BadResponseException
      * @throws RequestException
      */
     public function post(string $url, array $body): Response
@@ -189,7 +185,6 @@ abstract class BaseClient
      * @param string $url
      * @param array $params
      * @return Response
-     * @throws BadResponseException
      * @throws RequestException
      */
     public function get(string $url, array $params = []): Response

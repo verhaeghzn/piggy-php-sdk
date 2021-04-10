@@ -4,7 +4,7 @@ namespace Piggy\Api\Resources\OAuth;
 
 use Piggy\Api\Exceptions\BadResponseException;
 use Piggy\Api\Exceptions\RequestException;
-use Piggy\Api\Mappers\CreditReceptionMapper;
+use Piggy\Api\Mappers\Loyalty\CreditReceptionMapper;
 use Piggy\Api\Models\CreditReception;
 use Piggy\Api\Models\Member;
 use Piggy\Api\Resources\BaseResource;
@@ -22,13 +22,12 @@ class CreditReceptionsResource extends BaseResource
 
     /**
      * @param int $id
-     * @return CreditReception|Member
+     * @return CreditReception
      * @throws RequestException
-     * @throws BadResponseException
      */
     public function get(int $id): CreditReception
     {
-        $response = $this->client->get($this->resourceUri . "/" . $id, []);
+        $response = $this->client->get("{$this->resourceUri}/{$id}", []);
 
         $mapper = new CreditReceptionMapper();
 
@@ -44,8 +43,12 @@ class CreditReceptionsResource extends BaseResource
      * @throws BadResponseException
      * @throws RequestException
      */
-    public function create(int $shopId, int $purchaseAmount, int $memberId = null, int $loyaltyCardId = null): CreditReception
-    {
+    public function create(
+        int $shopId,
+        int $purchaseAmount,
+        int $memberId = null,
+        int $loyaltyCardId = null
+    ): CreditReception {
         $body = [
             "shop_id" => $shopId,
             "purchase_amount" => $purchaseAmount,

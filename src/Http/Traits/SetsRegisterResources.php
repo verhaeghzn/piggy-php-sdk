@@ -7,7 +7,7 @@ use Piggy\Api\Resources\Register\MembersResource;
 
 /**
  * Trait SetsRegisterResources
- * @package Piggy\Api
+ * @package Piggy\Api\Http\Traits
  */
 trait SetsRegisterResources
 {
@@ -17,10 +17,10 @@ trait SetsRegisterResources
     public $members;
 
     /**
-     * @param BaseClient $piggyApi
+     * @param BaseClient $client
      */
-    protected function setResources(BaseClient $piggyApi)
+    protected function setResources(BaseClient $client)
     {
-        $this->members = new MembersResource($piggyApi);
+        $this->members = new MembersResource($client);
     }
 }

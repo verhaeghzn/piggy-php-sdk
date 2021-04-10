@@ -4,8 +4,8 @@ namespace Piggy\Api\Resources\OAuth;
 
 use Piggy\Api\Exceptions\BadResponseException;
 use Piggy\Api\Exceptions\RequestException;
-use Piggy\Api\Mappers\WebshopMapper;
-use Piggy\Api\Mappers\WebshopsMapper;
+use Piggy\Api\Mappers\Shops\WebshopMapper;
+use Piggy\Api\Mappers\Shops\WebshopsMapper;
 use Piggy\Api\Models\Webshop;
 use Piggy\Api\Resources\BaseResource;
 
@@ -22,7 +22,6 @@ class WebshopsResource extends BaseResource
 
     /**
      * @return array
-     * @throws BadResponseException
      * @throws RequestException
      */
     public function all(): array
@@ -37,7 +36,6 @@ class WebshopsResource extends BaseResource
     /**
      * @param int $id
      * @return Webshop
-     * @throws BadResponseException
      * @throws RequestException
      */
     public function get(int $id): Webshop

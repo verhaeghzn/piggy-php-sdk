@@ -2,11 +2,9 @@
 
 namespace Piggy\Api\Http\Responses;
 
-use stdClass;
-
 /**
  * Class AuthenticationResponse
- * @package Piggy\Api\Http
+ * @package Piggy\Api\Http\Responses
  */
 class AuthenticationResponse
 {

@@ -21,8 +21,8 @@ class Response
 
     /**
      * Response constructor.
-     * @param stdClass $data
-     * @param stdClass $meta
+     * @param $data
+     * @param $meta
      */
     public function __construct($data, $meta)
     {
