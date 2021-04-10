@@ -31,8 +31,8 @@ class LoyaltyCardMapper
         $loyaltyCard = new LoyaltyCard(
             $data->id,
             $data->hash,
-            CardType::$type()->getValue(),
-            CardStatus::$status()->getValue(),
+            CardType::byName($data->type)->getValue(),
+            CardStatus::byName($data->status)->getValue(),
             $member
         );
 

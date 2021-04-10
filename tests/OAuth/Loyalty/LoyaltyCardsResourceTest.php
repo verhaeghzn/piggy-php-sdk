@@ -31,8 +31,8 @@ class LoyaltyCardsResourceTest extends OAuthTestCase
         $this->addExpectedResponse([
             "id" => $loyaltyCard->getId(),
             "hash" => $loyaltyCard->getHash(),
-            "type" => CardType::from($loyaltyCard->getType())->getKey(),
-            "status" => CardStatus::from($loyaltyCard->getType())->getKey(),
+            "type" => CardType::get($loyaltyCard->getType())->getName(),
+            "status" => CardStatus::get($loyaltyCard->getStatus())->getName(),
             "member" => [
                 "id" => $member->getId(),
                 "email" => $member->getEmail()
@@ -63,8 +63,8 @@ class LoyaltyCardsResourceTest extends OAuthTestCase
         $this->addExpectedResponse([
             "id" => $loyaltyCard->getId(),
             "hash" => $loyaltyCard->getHash(),
-            "type" => CardType::from($loyaltyCard->getType())->getKey(),
-            "status" => CardStatus::from($loyaltyCard->getType())->getKey(),
+            "type" => CardType::get($loyaltyCard->getType())->getName(),
+            "status" => CardStatus::get($loyaltyCard->getStatus())->getName(),
             "member" => [
                 "id" => $member->getId(),
                 "email" => $member->getEmail()

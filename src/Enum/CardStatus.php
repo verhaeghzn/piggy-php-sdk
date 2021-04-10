@@ -2,7 +2,7 @@
 
 namespace Piggy\Api\Enum;
 
-use MyCLabs\Enum\Enum;
+use MabeEnum\Enum;
 
 /**
  * Class CardStatus
