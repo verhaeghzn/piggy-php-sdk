@@ -16,5 +16,5 @@ pipelines:
     - step:
         name: Sync repo to GitHub
         script:
-          - apk update && apk add git
+          - apk update && apk add git && apk add ssh-client
           - git push --mirror git@github.com:Piggy-Loyalty/piggy-php-sdk.git
