@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\OAuth;
+namespace Tests\OAuth\Loyalty;
 
 use Exception;
 use Piggy\Api\Exceptions\RequestException;
