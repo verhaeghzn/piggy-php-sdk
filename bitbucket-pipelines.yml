@@ -16,4 +16,5 @@ pipelines:
     - step:
         name: Sync repo to GitHub
         script:
+          - apt-get update && apt-get install git
           - git push --mirror git@github.com:Piggy-Loyalty/piggy-php-sdk.git
