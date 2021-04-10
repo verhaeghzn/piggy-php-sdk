@@ -19,7 +19,7 @@ abstract class BaseResource
      * BaseResource constructor.
      * @param BaseClient $client
      */
-    public function __construct($client)
+    public function __construct(BaseClient $client)
     {
         $this->client = $client;
     }
