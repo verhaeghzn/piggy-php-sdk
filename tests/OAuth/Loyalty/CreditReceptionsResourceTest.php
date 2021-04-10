@@ -40,4 +40,12 @@ class CreditReceptionsResourceTest extends OAuthTestCase
         $this->assertEquals($data->getCreatedAt(), $creditReception->getCreatedAt());
         $this->assertEquals($data->getMember()->getEmail(), $creditReception->getMember()->getEmail());
     }
+
+    /**
+     *
+     */
+    public function it_returns_credit_reception_after_creation()
+    {
+        // Member on credit reception null || No member on credit reception at all || always send back member with credit reception
+    }
 }

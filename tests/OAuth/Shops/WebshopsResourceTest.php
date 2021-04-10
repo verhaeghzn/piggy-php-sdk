@@ -46,5 +46,21 @@ class WebshopsResourceTest extends OAuthTestCase
         $this->assertEquals($fetchedWebshop2->getName(), $webshop2->getName());
     }
 
+    /**
+     * @test
+     */
+    public function it_returns_a_webshop()
+    {
+        $webshop = new Webshop(1, "webshop");
 
+        $this->addExpectedResponse([
+            "id" => $webshop->getId(),
+            "name" => $webshop->getName(),
+        ]);
+
+        $data = $this->mockedClient->webshops->get(1);
+
+        $this->assertEquals($data->getId(), $webshop->getId());
+        $this->assertEquals($data->getName(), $webshop->getName());
+    }
 }
