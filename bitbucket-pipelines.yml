@@ -1,7 +1,20 @@
+image: php:7.2-fpm
+
 clone:
   depth: full
 pipelines:
   default:
     - step:
+        name: Test
+        caches:
+          - composer
+        script:
+          - apk --no-cache add php7-ldap php7-sqlite3 sqlite sqlite-dev
+            libpng libpng-dev libldap openldap-dev
+          - docker-php-ext-install ldap pdo pdo_sqlite gd
+          - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+          - phpunit --coverage-text --colors=never --verbose
+    - step:
+        name: Sync repo to GitHub
         script:
           - git push --mirror git@github.com:Piggy-Loyalty/piggy-php-sdk.git
