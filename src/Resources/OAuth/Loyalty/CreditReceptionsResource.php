@@ -6,7 +6,9 @@ use Piggy\Api\Exceptions\BadResponseException;
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\Loyalty\CreditReceptionMapper;
 use Piggy\Api\Models\Loyalty\CreditReception;
+use Piggy\Api\Models\Loyalty\LoyaltyCard;
 use Piggy\Api\Models\Loyalty\Member;
+use Piggy\Api\Models\Shops\Shop;
 use Piggy\Api\Resources\BaseResource;
 
 /**
@@ -35,25 +37,24 @@ class CreditReceptionsResource extends BaseResource
     }
 
     /**
-     * @param int $shopId
+     * @param Shop $shop
+     * @param Member $member
      * @param int $purchaseAmount
-     * @param int|null $memberId
-     * @param int|null $loyaltyCardId
-     * @return CreditReception|Member
-     * @throws BadResponseException
+     * @param LoyaltyCard|null $loyaltyCard
+     * @return CreditReception
      * @throws RequestException
      */
     public function create(
-        int $shopId,
+        Shop $shop,
+        Member $member,
         int $purchaseAmount,
-        int $memberId = null,
-        int $loyaltyCardId = null
+        ?LoyaltyCard $loyaltyCard = null
     ): CreditReception {
         $body = [
-            "shop_id" => $shopId,
+            "shop_id" => $shop->getId(),
+            "member_id" => $member->getId(),
             "purchase_amount" => $purchaseAmount,
-            "member_id" => $memberId,
-            "loyalty_card_id" => $loyaltyCardId
+            "loyalty_card_id" => $loyaltyCard->getId(),
         ];
 
         $response = $this->client->post($this->resourceUri, $body);
