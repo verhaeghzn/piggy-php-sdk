@@ -4,10 +4,10 @@ namespace Piggy\Api\Resources\OAuth;
 
 use Piggy\Api\Exceptions\BadResponseException;
 use Piggy\Api\Exceptions\RequestException;
-use Piggy\Api\Mappers\MemberMapper;
 use Piggy\Api\Mappers\Loyalty\MemberAndCreditBalanceResponseMapper;
-use Piggy\Api\Models\Member;
-use Piggy\Api\Models\MemberResponse;
+use Piggy\Api\Mappers\Loyalty\MemberMapper;
+use Piggy\Api\Models\Loyalty\Member;
+use Piggy\Api\Models\Loyalty\MemberResponse;
 use Piggy\Api\Resources\BaseResource;
 
 /**
@@ -25,7 +25,6 @@ class MembersResource extends BaseResource
      * @param int $shopId
      * @param string $email
      * @return Member
-     * @throws BadResponseException
      * @throws RequestException
      */
     public function create(int $shopId, string $email): Member
@@ -46,7 +45,6 @@ class MembersResource extends BaseResource
      * @param int $shopId
      * @param string $email
      * @return MemberResponse
-     * @throws BadResponseException
      * @throws RequestException
      */
     public function findOneBy(int $shopId, string $email): MemberResponse
@@ -67,7 +65,6 @@ class MembersResource extends BaseResource
      * @param int $shopId
      * @param int $id
      * @return MemberResponse
-     * @throws BadResponseException
      * @throws RequestException
      */
     public function get(int $shopId, int $id): MemberResponse

@@ -2,7 +2,7 @@
 
 namespace Piggy\Api\Mappers\Loyalty;
 
-use Piggy\Api\Models\MemberResponse;
+use Piggy\Api\Models\Loyalty\MemberResponse;
 
 /**
  * Class MemberAndCreditBalanceResponseMapper

@@ -1,13 +1,12 @@
 <?php
 
-
-namespace Piggy\Api\Models;
+namespace Piggy\Api\Models\Shops;
 
 /**
  * Class Shop
- * @package Piggy\Api\Models
+ * @package Piggy\Api\Models\Shops
  */
-class Shop
+abstract class Shop
 {
     /**
      * @var int|string

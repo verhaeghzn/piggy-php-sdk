@@ -2,14 +2,13 @@
 
 namespace Tests\OAuth;
 
-use DateTime;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
-use Piggy\Api\Models\CreditReception;
-use Piggy\Api\Models\Member;
+use Piggy\Api\Models\Loyalty\CreditReception;
+use Piggy\Api\Models\Loyalty\Member;
 use Piggy\Api\OAuthClient;
 
 /**

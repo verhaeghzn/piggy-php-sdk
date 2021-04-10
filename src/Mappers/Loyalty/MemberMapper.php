@@ -2,7 +2,7 @@
 
 namespace Piggy\Api\Mappers\Loyalty;
 
-use Piggy\Api\Models\Member;
+use Piggy\Api\Models\Loyalty\Member;
 
 /**
  * Class MemberMapper

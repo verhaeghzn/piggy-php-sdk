@@ -2,7 +2,7 @@
 
 namespace Piggy\Api\Mappers\Shops;
 
-use Piggy\Api\Models\PhysicalShop;
+use Piggy\Api\Models\Shops\PhysicalShop;
 
 /**
  * Class PhysicalShopMapper

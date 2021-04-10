@@ -1,10 +1,10 @@
 <?php
 
-namespace Piggy\Api\Models;
+namespace Piggy\Api\Models\Loyalty;
 
 /**
  * Class StagedCreditReception
- * @package Piggy\Api\Models
+ * @package Piggy\Api\Models\Loyalty
  */
 class StagedCreditReception
 {

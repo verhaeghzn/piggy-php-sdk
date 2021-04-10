@@ -4,10 +4,10 @@ namespace Piggy\Api\Resources\Register;
 
 use Piggy\Api\Exceptions\BadResponseException;
 use Piggy\Api\Exceptions\RequestException;
-use Piggy\Api\Mappers\MemberMapper;
 use Piggy\Api\Mappers\Loyalty\MemberAndCreditBalanceResponseMapper;
-use Piggy\Api\Models\Member;
-use Piggy\Api\Models\MemberResponse;
+use Piggy\Api\Mappers\Loyalty\MemberMapper;
+use Piggy\Api\Models\Loyalty\Member;
+use Piggy\Api\Models\Loyalty\MemberResponse;
 use Piggy\Api\Resources\BaseResource;
 
 /**
@@ -25,7 +25,6 @@ class MembersResource extends BaseResource
      * @param string $email
      * @return Member
      * @throws RequestException
-     * @throws BadResponseException
      */
     public function create(string $email): Member
     {
@@ -43,7 +42,6 @@ class MembersResource extends BaseResource
     /**
      * @param string $email
      * @return MemberResponse
-     * @throws BadResponseException
      * @throws RequestException
      */
     public function findOneBy(string $email): MemberResponse
@@ -62,7 +60,6 @@ class MembersResource extends BaseResource
     /**
      * @param int $id
      * @return MemberResponse
-     * @throws BadResponseException
      * @throws RequestException
      */
     public function get(int $id): MemberResponse
@@ -73,19 +70,4 @@ class MembersResource extends BaseResource
 
         return $mapper->map($response->getData());
     }
-
-//    /**
-//     * @param int $id
-//     * @param array $fields
-//     * @return Member
-//     * @throws RequestException
-//     */
-//    public function update(int $id, array $fields = []): MemberResponse
-//    {
-//        $response = $this->client->request('PUT', $this->resourceUri . "/" . $id, $fields);
-//
-//        $mapper = new MemberAndCreditBalanceResponseMapper();
-//
-//        return $mapper->map($response->getData());
-//    }
 }

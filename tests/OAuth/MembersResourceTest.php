@@ -7,8 +7,8 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
-use Piggy\Api\Models\CreditBalance;
-use Piggy\Api\Models\Member;
+use Piggy\Api\Models\Loyalty\CreditBalance;
+use Piggy\Api\Models\Loyalty\Member;
 use Piggy\Api\OAuthClient;
 
 /**

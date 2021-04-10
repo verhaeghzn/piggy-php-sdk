@@ -5,8 +5,8 @@ namespace Piggy\Api\Resources\OAuth;
 use Piggy\Api\Exceptions\BadResponseException;
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\Loyalty\CreditReceptionMapper;
-use Piggy\Api\Models\CreditReception;
-use Piggy\Api\Models\Member;
+use Piggy\Api\Models\Loyalty\CreditReception;
+use Piggy\Api\Models\Loyalty\Member;
 use Piggy\Api\Resources\BaseResource;
 
 /**

@@ -2,7 +2,7 @@
 
 namespace Piggy\Api\Mappers\Loyalty;
 
-use Piggy\Api\Models\StagedCreditReception;
+use Piggy\Api\Models\Loyalty\StagedCreditReception;
 
 /**
  * Class StagedCreditReceptionMapper

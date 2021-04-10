@@ -2,7 +2,7 @@
 
 namespace Piggy\Api\Mappers\Shops;
 
-use Piggy\Api\Models\Webshop;
+use Piggy\Api\Models\Shops\Webshop;
 
 /**
  * Class WebshopMapper

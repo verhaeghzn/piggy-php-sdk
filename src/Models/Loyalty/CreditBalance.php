@@ -1,6 +1,6 @@
 <?php
 
-namespace Piggy\Api\Models;
+namespace Piggy\Api\Models\Loyalty;
 
 /**
  * Class CreditBalance

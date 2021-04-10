@@ -2,8 +2,7 @@
 
 namespace Piggy\Api\Mappers\Customer;
 
-use Piggy\Api\Models\Customer;
-use stdClass;
+use Piggy\Api\Models\Customer\Customer;
 
 /**
  * Class CustomerMapper

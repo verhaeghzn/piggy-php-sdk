@@ -7,9 +7,8 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
-use Piggy\Api\Models\Webshop;
+use Piggy\Api\Models\Shops\Webshop;
 use Piggy\Api\OAuthClient;
-use Piggy\Api\Resources\OAuth\WebshopsResource;
 
 /**
  * Class WebshopsResource
@@ -19,7 +18,6 @@ class WebshopsResourceTest extends TestCase
 {
     /**
      * @test
-     * @throws \Piggy\Api\Exceptions\BadResponseException
      * @throws \Piggy\Api\Exceptions\RequestException
      */
     public function it_returns_all_webshops()
