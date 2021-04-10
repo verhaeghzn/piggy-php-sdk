@@ -2,6 +2,7 @@
 
 namespace Piggy\Api\Mappers\Loyalty;
 
+use Exception;
 use Piggy\Api\Models\Loyalty\CreditReception;
 
 /**
@@ -13,6 +14,7 @@ class CreditReceptionMapper
     /**
      * @param $data
      * @return CreditReception
+     * @throws Exception
      */
     public function map($data): CreditReception
     {

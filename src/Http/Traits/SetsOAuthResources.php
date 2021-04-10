@@ -6,6 +6,10 @@ use Piggy\Api\Http\BaseClient;
 use Piggy\Api\Resources\OAuth\Loyalty\CreditReceptionsResource;
 use Piggy\Api\Resources\OAuth\Loyalty\LoyaltyCardsResource;
 use Piggy\Api\Resources\OAuth\Loyalty\MembersResource;
+use Piggy\Api\Resources\OAuth\Loyalty\Rewards\DigitalRewardReceptionsResource;
+use Piggy\Api\Resources\OAuth\Loyalty\Rewards\ExternalRewardReceptionsResource;
+use Piggy\Api\Resources\OAuth\Loyalty\Rewards\PhysicalRewardReceptionsResource;
+use Piggy\Api\Resources\OAuth\Loyalty\Rewards\RewardsResource;
 use Piggy\Api\Resources\OAuth\Loyalty\StagedCreditReceptionsResource;
 use Piggy\Api\Resources\OAuth\Shops\WebshopsResource;
 
@@ -41,6 +45,26 @@ trait SetsOAuthResources
     public $loyaltyCards;
 
     /**
+     * @var RewardsResource
+     */
+    public $rewards;
+
+    /**
+     * @var DigitalRewardReceptionsResource
+     */
+    public $digitalRewardReceptions;
+
+    /**
+     * @var ExternalRewardReceptionsResource
+     */
+    public $externalRewardReceptions;
+
+    /**
+     * @var PhysicalRewardReceptionsResource
+     */
+    public $physicalRewardReceptions;
+
+    /**
      * @param BaseClient $client
      */
     protected function setResources(BaseClient $client)
@@ -50,5 +74,9 @@ trait SetsOAuthResources
         $this->creditReceptions = new CreditReceptionsResource($client);
         $this->stagedCreditReceptions = new StagedCreditReceptionsResource($client);
         $this->loyaltyCards = new LoyaltyCardsResource($client);
+        $this->rewards = new RewardsResource($client);
+        $this->digitalRewardReceptions = new DigitalRewardReceptionsResource($client);
+        $this->externalRewardReceptions = new ExternalRewardReceptionsResource($client);
+        $this->physicalRewardReceptions = new PhysicalRewardReceptionsResource($client);
     }
 }
