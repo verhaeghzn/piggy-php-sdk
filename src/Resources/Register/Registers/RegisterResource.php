@@ -1,6 +1,6 @@
 <?php
 
-namespace Piggy\Api\Resources\Register;
+namespace Piggy\Api\Resources\Register\Registers;
 
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\Registers\RegisterMapper;
@@ -9,7 +9,7 @@ use Piggy\Api\Resources\BaseResource;
 
 /**
  * Class RegisterResource
- * @package Piggy\Api\Resources\Register
+ * @package Piggy\Api\Resources\Register\Registers
  */
 class RegisterResource extends BaseResource
 {

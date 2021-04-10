@@ -1,6 +1,6 @@
 <?php
 
-namespace Piggy\Api\Resources\OAuth;
+namespace Piggy\Api\Resources\OAuth\Loyalty;
 
 use Piggy\Api\Exceptions\BadResponseException;
 use Piggy\Api\Exceptions\RequestException;

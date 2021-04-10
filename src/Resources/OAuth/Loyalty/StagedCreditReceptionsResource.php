@@ -1,16 +1,15 @@
 <?php
 
-namespace Piggy\Api\Resources\OAuth;
+namespace Piggy\Api\Resources\OAuth\Loyalty;
 
-use Piggy\Api\Exceptions\BadResponseException;
 use Piggy\Api\Exceptions\RequestException;
-use Piggy\Api\Mappers\StagedCreditReceptionMapper;
-use Piggy\Api\Models\StagedCreditReception;
+use Piggy\Api\Mappers\Loyalty\StagedCreditReceptionMapper;
+use Piggy\Api\Models\Loyalty\StagedCreditReception;
 use Piggy\Api\Resources\BaseResource;
 
 /**
  * Class StagedCreditReceptionsResource
- * @package Piggy\Api\Resources\OAuth
+ * @package Piggy\Api\Resources\OAuth\Loyalty
  */
 class StagedCreditReceptionsResource extends BaseResource
 {
@@ -23,7 +22,6 @@ class StagedCreditReceptionsResource extends BaseResource
      * @param int $id
      * @return StagedCreditReception
      * @throws RequestException
-     * @throws BadResponseException
      */
     public function get(int $id): StagedCreditReception
     {
@@ -39,7 +37,6 @@ class StagedCreditReceptionsResource extends BaseResource
      * @param $email
      * @param null $locale
      * @return StagedCreditReception
-     * @throws BadResponseException
      * @throws RequestException
      */
     public function send($hash, $email, $locale = null): StagedCreditReception
@@ -62,7 +59,6 @@ class StagedCreditReceptionsResource extends BaseResource
      * @param int $purchaseAmount
      * @param int|null $credits
      * @return StagedCreditReception
-     * @throws BadResponseException
      * @throws RequestException
      */
     public function create(int $shopId, int $purchaseAmount, int $credits = null): StagedCreditReception

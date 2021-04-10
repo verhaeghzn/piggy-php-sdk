@@ -1,17 +1,16 @@
 <?php
 
-namespace Piggy\Api\Resources\OAuth;
+namespace Piggy\Api\Resources\OAuth\Shops;
 
-use Piggy\Api\Exceptions\BadResponseException;
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\Shops\WebshopMapper;
 use Piggy\Api\Mappers\Shops\WebshopsMapper;
-use Piggy\Api\Models\Webshop;
+use Piggy\Api\Models\Shops\Webshop;
 use Piggy\Api\Resources\BaseResource;
 
 /**
  * Class WebshopsResource
- * @package Piggy\Api\Resources\OAuth
+ * @package Piggy\Api\Resources\OAuth\Shops
  */
 class WebshopsResource extends BaseResource
 {

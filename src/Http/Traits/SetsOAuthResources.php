@@ -3,10 +3,10 @@
 namespace Piggy\Api\Http\Traits;
 
 use Piggy\Api\Http\BaseClient;
-use Piggy\Api\Resources\OAuth\CreditReceptionsResource;
-use Piggy\Api\Resources\OAuth\MembersResource;
-use Piggy\Api\Resources\OAuth\StagedCreditReceptionsResource;
-use Piggy\Api\Resources\OAuth\WebshopsResource;
+use Piggy\Api\Resources\OAuth\Loyalty\CreditReceptionsResource;
+use Piggy\Api\Resources\OAuth\Loyalty\MembersResource;
+use Piggy\Api\Resources\OAuth\Loyalty\StagedCreditReceptionsResource;
+use Piggy\Api\Resources\OAuth\Shops\WebshopsResource;
 
 /**
  * Trait SetsOAuthResources
