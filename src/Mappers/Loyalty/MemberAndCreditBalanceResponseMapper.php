@@ -19,11 +19,10 @@ class MemberAndCreditBalanceResponseMapper
         $memberMapper = new MemberMapper();
         $member = $memberMapper->map($data->member);
 
-        $creditBalanceMapper = new CreditBalanceMapper();
-
         if ($data->credit_balance == null) {
             $creditBalance = null;
         } else {
+            $creditBalanceMapper = new CreditBalanceMapper();
             $creditBalance = $creditBalanceMapper->map($member, $data->credit_balance);
         }
 

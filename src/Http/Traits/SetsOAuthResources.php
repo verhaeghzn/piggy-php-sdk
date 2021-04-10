@@ -4,6 +4,7 @@ namespace Piggy\Api\Http\Traits;
 
 use Piggy\Api\Http\BaseClient;
 use Piggy\Api\Resources\OAuth\Loyalty\CreditReceptionsResource;
+use Piggy\Api\Resources\OAuth\Loyalty\LoyaltyCardsResource;
 use Piggy\Api\Resources\OAuth\Loyalty\MembersResource;
 use Piggy\Api\Resources\OAuth\Loyalty\StagedCreditReceptionsResource;
 use Piggy\Api\Resources\OAuth\Shops\WebshopsResource;
@@ -27,12 +28,17 @@ trait SetsOAuthResources
     /**
      * @var CreditReceptionsResource
      */
-    public $creditReceptionsResource;
+    public $creditReceptions;
 
     /**
      * @var StagedCreditReceptionsResource
      */
-    public $stagedCreditReceptionsResource;
+    public $stagedCreditReceptions;
+
+    /**
+     * @var LoyaltyCardsResource
+     */
+    public $loyaltyCards;
 
     /**
      * @param BaseClient $client
@@ -41,7 +47,8 @@ trait SetsOAuthResources
     {
         $this->members = new MembersResource($client);
         $this->webshops = new WebshopsResource($client);
-        $this->creditReceptionsResource = new CreditReceptionsResource($client);
-        $this->stagedCreditReceptionsResource = new StagedCreditReceptionsResource($client);
+        $this->creditReceptions = new CreditReceptionsResource($client);
+        $this->stagedCreditReceptions = new StagedCreditReceptionsResource($client);
+        $this->loyaltyCards = new LoyaltyCardsResource($client);
     }
 }

@@ -33,7 +33,7 @@ class CreditReceptionsResourceTest extends OAuthTestCase
             ],
         ]);
 
-        $data = $this->mockedClient->creditReceptionsResource->get(1);
+        $data = $this->mockedClient->creditReceptions->get(1);
 
         $this->assertEquals($data->getId(), $creditReception->getId());
         $this->assertEquals($data->getCredits(), $creditReception->getCredits());
