@@ -1,12 +1,13 @@
 <?php
 
-namespace Piggy\Api\Mappers;
+namespace Piggy\Api\Mappers\Registers;
 
-use Piggy\Api\Models\Register;
+use Piggy\Api\Mappers\Shops\PhysicalShopMapper;
+use Piggy\Api\Models\Registers\Register;
 
 /**
  * Class RegisterMapper
- * @package Piggy\Api\Mappers
+ * @package Piggy\Api\Mappers\Registers
  */
 class RegisterMapper
 {

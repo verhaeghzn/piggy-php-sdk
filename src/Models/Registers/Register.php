@@ -1,10 +1,12 @@
 <?php
 
-namespace Piggy\Api\Models;
+namespace Piggy\Api\Models\Registers;
+
+use Piggy\Api\Models\Shops\PhysicalShop;
 
 /**
  * Class Register
- * @package Piggy\Api\Models
+ * @package Piggy\Api\Models\Registers
  */
 class Register
 {
