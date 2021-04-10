@@ -2,7 +2,8 @@
 
 namespace Piggy\Api\Mappers;
 
-use Piggy\Api\Model\Customer;
+use Piggy\Api\Models\Customer;
+use stdClass;
 
 /**
  * Class CustomerMapper
@@ -11,17 +12,17 @@ use Piggy\Api\Model\Customer;
 class CustomerMapper
 {
     /**
-     * @param $response
+     * @param stdClass $data
      * @return Customer
      */
-    public function mapFromResponse($response): Customer
+    public function map(stdClass $data): Customer
     {
         $customer = new Customer();
 
-        $customer->setId($response->id);
-        $customer->setEmail($response->email);
-        $customer->setFirstName($response->first_name ?? null);
-        $customer->setLastName($response->last_name ?? null);
+        $customer->setId($data->id);
+        $customer->setEmail($data->email);
+        $customer->setFirstName($data->first_name ?? null);
+        $customer->setLastName($data->last_name ?? null);
 
         return $customer;
     }

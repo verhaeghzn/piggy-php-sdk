@@ -16,8 +16,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/",
-            "Tests\\Piggy\\Api\\": "tests/"
+            "Tests\\": "tests/"
         }
     },
     "require": {

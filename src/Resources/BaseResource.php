@@ -3,7 +3,6 @@
 namespace Piggy\Api\Resources;
 
 use Piggy\Api\Http\BaseClient;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class BaseResource
@@ -20,15 +19,8 @@ abstract class BaseResource
      * BaseResource constructor.
      * @param BaseClient $client
      */
-    public function __construct(BaseClient $client)
+    public function __construct($client)
     {
         $this->client = $client;
-    }
-
-    public function getDataFromResponse(ResponseInterface $response)
-    {
-        $contents = $response->getBody()->getContents();
-
-        return $contents ? json_decode($contents)->data : null;
     }
 }

@@ -2,10 +2,11 @@
 
 namespace Piggy\Api\Resources\OAuth;
 
+use Piggy\Api\Exceptions\BadResponseException;
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\WebshopMapper;
 use Piggy\Api\Mappers\WebshopsMapper;
-use Piggy\Api\Model\Webshop;
+use Piggy\Api\Models\Webshop;
 use Piggy\Api\Resources\BaseResource;
 
 /**
@@ -21,28 +22,30 @@ class WebshopsResource extends BaseResource
 
     /**
      * @return array
+     * @throws BadResponseException
      * @throws RequestException
      */
-    public function all()
+    public function all(): array
     {
-        $response = $this->client->request("GET", $this->resourceUri, []);
+        $response = $this->client->get($this->resourceUri, []);
 
         $mapper = new WebshopsMapper();
 
-        return $mapper->mapFromResponse($this->getDataFromResponse($response));
+        return $mapper->map($response->getData());
     }
 
     /**
      * @param int $id
      * @return Webshop
+     * @throws BadResponseException
      * @throws RequestException
      */
-    public function get(int $id)
+    public function get(int $id): Webshop
     {
-        $response = $this->client->request('GET', $this->resourceUri . "/" . $id, []);
+        $response = $this->client->get("{$this->resourceUri}/{$id}", []);
 
         $mapper = new WebshopMapper();
 
-        return $mapper->mapFromResponse($this->getDataFromResponse($response));
+        return $mapper->map($response->getData());
     }
 }

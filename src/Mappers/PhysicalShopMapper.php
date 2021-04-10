@@ -2,8 +2,7 @@
 
 namespace Piggy\Api\Mappers;
 
-use Piggy\Api\Model\Member;
-use Piggy\Api\Model\PhysicalShop;
+use Piggy\Api\Models\PhysicalShop;
 
 /**
  * Class PhysicalShopMapper
@@ -13,9 +12,9 @@ class PhysicalShopMapper
 {
     /**
      * @param $response
-     * @return Member
+     * @return PhysicalShop
      */
-    public function mapFromResponse($response): PhysicalShop
+    public function map($response): PhysicalShop
     {
         $physicalShop = new PhysicalShop();
 

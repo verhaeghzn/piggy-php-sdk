@@ -2,7 +2,7 @@
 
 namespace Piggy\Api\Mappers;
 
-use Piggy\Api\Model\Member;
+use Piggy\Api\Models\Member;
 
 /**
  * Class MemberMapper
@@ -11,15 +11,15 @@ use Piggy\Api\Model\Member;
 class MemberMapper
 {
     /**
-     * @param $response
+     * @param object $data
      * @return Member
      */
-    public function mapFromResponse($response): Member
+    public function map(object $data): Member
     {
-        $member = new Member();
-
-        $member->setId($response->id);
-        $member->setEmail($response->email);
+        $member = new Member(
+            $data->id,
+            $data->email
+        );
 
         return $member;
     }

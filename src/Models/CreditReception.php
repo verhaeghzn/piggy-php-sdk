@@ -1,10 +1,12 @@
 <?php
 
-namespace Piggy\Api\Model;
+namespace Piggy\Api\Models;
+
+use DateTime;
 
 /**
  * Class CreditReception
- * @package Piggy\Api\Model
+ * @package Piggy\Api\Models
  */
 class CreditReception
 {
@@ -18,7 +20,7 @@ class CreditReception
      */
     protected $credits;
 
-    /**
+    /**s
      * @var string
      */
     protected $createdAt;
@@ -28,20 +30,21 @@ class CreditReception
      */
     protected $member;
 
+    // Created at > DateTime
+    public function __construct($id, int $credits, Member $member, string $createdAt)
+    {
+        $this->id = $id;
+        $this->credits = $credits;
+        $this->member = $member;
+        $this->createdAt = $createdAt;
+    }
+
     /**
      * @return int
      */
     public function getId(): int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     /**
@@ -53,14 +56,6 @@ class CreditReception
     }
 
     /**
-     * @param int $credits
-     */
-    public function setCredits(int $credits): void
-    {
-        $this->credits = $credits;
-    }
-
-    /**
      * @return string
      */
     public function getCreatedAt(): string
@@ -69,26 +64,10 @@ class CreditReception
     }
 
     /**
-     * @param string $createdAt
-     */
-    public function setCreatedAt(string $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
      * @return Member
      */
     public function getMember(): Member
     {
         return $this->member;
-    }
-
-    /**
-     * @param Member $member
-     */
-    public function setMember(Member $member): void
-    {
-        $this->member = $member;
     }
 }

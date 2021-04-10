@@ -3,9 +3,14 @@
 namespace Piggy\Api\Http;
 
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
+use Piggy\Api\Exceptions\BadResponseException;
 use Piggy\Api\Exceptions\RequestException;
+use Piggy\Api\Http\Responses\AuthenticationResponse;
+use Piggy\Api\Http\Responses\Response;
 use Psr\Http\Message\ResponseInterface;
+use Throwable;
 
 /**
  * Class BaseClient
@@ -13,7 +18,6 @@ use Psr\Http\Message\ResponseInterface;
  */
 abstract class BaseClient
 {
-
     /** @var GuzzleClient */
     private $httpClient;
 
@@ -29,20 +33,26 @@ abstract class BaseClient
 
     /**
      * BaseClient constructor.
+     * @param ClientInterface|null $client
      */
-    public function __construct()
+    public function __construct(?ClientInterface $client = null)
     {
-        $this->httpClient = new GuzzleClient();
+        if ($client) {
+            $this->httpClient = $client;
+        } else {
+            $this->httpClient = new GuzzleClient();
+        }
     }
 
     /**
      * @param $method
      * @param $endpoint
-     * @param array $query_options
-     * @return ResponseInterface
+     * @param array $queryOptions
+     * @return Response
+     * @throws BadResponseException
      * @throws RequestException
      */
-    public function request($method, $endpoint, $query_options = [])
+    public function request($method, $endpoint, $queryOptions = []): Response
     {
         if (!array_key_exists('Authorization', $this->headers)) {
             throw new RequestException('Authorization not set yet.');
@@ -52,20 +62,88 @@ abstract class BaseClient
 
         $options = [
             "headers" => $this->headers,
-            "form_params" => $query_options,
+            "form_params" => $queryOptions,
         ];
 
         try {
-            return $this->httpClient->request($method, $url, $options);
-        } catch(GuzzleException $e) {
+            $rawResponse = $this->httpClient->request($method, $url, $options);
+            $response = $this->parseResponse($rawResponse);
+            return $response;
+        } catch (GuzzleException $e) {
             throw RequestException::createFromGuzzleException($e);
         }
     }
 
     /**
-     * @return mixed
+     * @param ResponseInterface $response
+     * @return Response
+     * @throws \Exception
      */
-    public function getBaseUrl()
+    private function parseResponse(ResponseInterface $response): Response
+    {
+        try {
+            $content = json_decode($response->getBody()->getContents());
+        } catch (Throwable $exception) {
+            throw new BadResponseException("Could not decode response");
+        }
+
+        if (!property_exists($content, "data")) {
+            throw new BadResponseException("Invalid response given. Data was missing from response");
+        }
+
+        if (!property_exists($content, "meta")) {
+            throw new BadResponseException("Invalid response given. Meta was missing from response");
+        }
+
+        $response = new Response($content->data, $content->meta);
+
+        return $response;
+    }
+
+    /**
+     * @param $endpoint
+     * @param array $queryOptions
+     * @return AuthenticationResponse
+     * @throws BadResponseException
+     * @throws RequestException
+     */
+    public function authenticationRequest($endpoint, $queryOptions = []): AuthenticationResponse
+    {
+        $url = $this->baseUrl . $endpoint;
+
+        $options = [
+            "headers" => $this->headers,
+            "form_params" => $queryOptions,
+        ];
+
+        try {
+            $rawResponse = $this->httpClient->request("POST", $url, $options);
+            $response = $this->parseAuthenticationResponse($rawResponse);
+            return $response;
+        } catch (GuzzleException $e) {
+            throw RequestException::createFromGuzzleException($e);
+        }
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @return AuthenticationResponse
+     * @throws BadResponseException
+     */
+    private function parseAuthenticationResponse(ResponseInterface $response): AuthenticationResponse
+    {
+        try {
+            $content = json_decode($response->getBody()->getContents());
+            return new AuthenticationResponse($content);
+        } catch (Throwable $exception) {
+            throw new BadResponseException("Could not parse authentication response. Message: {$exception->getMessage()}"); // want to add response raw content to exception probably
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getBaseUrl(): string
     {
         return $this->baseUrl;
     }
@@ -93,5 +171,35 @@ abstract class BaseClient
     public function getHeaders(): array
     {
         return $this->headers;
+    }
+
+    /**
+     * @param string $url
+     * @param array $body
+     * @return Response
+     * @throws BadResponseException
+     * @throws RequestException
+     */
+    public function post(string $url, array $body): Response
+    {
+        return $this->request('POST', $url, $body);
+    }
+
+    /**
+     * @param string $url
+     * @param array $params
+     * @return Response
+     * @throws BadResponseException
+     * @throws RequestException
+     */
+    public function get(string $url, array $params = []): Response
+    {
+        $query = http_build_query($params);
+
+        if ($query) {
+            $url = "{$url}?{$query}";
+        }
+
+        return $this->request('GET', $url);
     }
 }

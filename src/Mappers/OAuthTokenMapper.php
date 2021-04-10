@@ -2,7 +2,8 @@
 
 namespace Piggy\Api\Mappers;
 
-use Piggy\Api\Model\OAuthToken;
+use Piggy\Api\Models\OAuthToken;
+use stdClass;
 
 /**
  * Class OAuthTokenMapper
@@ -11,16 +12,16 @@ use Piggy\Api\Model\OAuthToken;
 class OAuthTokenMapper
 {
     /**
-     * @param $response
+     * @param stdClass $data
      * @return OAuthToken
      */
-    public function mapFromResponse($response): OAuthToken
+    public function map(stdClass $data): OAuthToken
     {
         $token = new OAuthToken();
 
-        $token->setAccessToken($response->access_token);
-        $token->setRefreshToken($response->refresh_token);
-        $token->setExpiresIn($response->expires_in);
+        $token->setAccessToken($data->access_token);
+        $token->setRefreshToken($data->refresh_token);
+        $token->setExpiresIn($data->expires_in);
 
         return $token;
     }

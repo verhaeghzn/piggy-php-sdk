@@ -2,7 +2,7 @@
 
 namespace Piggy\Api\Mappers;
 
-use Piggy\Api\Model\Webshop;
+use Piggy\Api\Models\Webshop;
 
 /**
  * Class WebshopMapper
@@ -11,16 +11,12 @@ use Piggy\Api\Model\Webshop;
 class WebshopMapper
 {
     /**
-     * @param $response
+     * @param $data
      * @return Webshop
      */
-    public function mapFromResponse($response): Webshop
+    public function map($data): Webshop
     {
-        $webshop = new Webshop();
-
-        $webshop->setId($response->id);
-        $webshop->setName($response->name);
-
+        $webshop = new Webshop($data->id, $data->name);
         return $webshop;
     }
 }

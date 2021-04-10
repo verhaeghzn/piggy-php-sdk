@@ -2,9 +2,10 @@
 
 namespace Piggy\Api\Resources\OAuth;
 
+use Piggy\Api\Exceptions\BadResponseException;
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\StagedCreditReceptionMapper;
-use Piggy\Api\Model\StagedCreditReception;
+use Piggy\Api\Models\StagedCreditReception;
 use Piggy\Api\Resources\BaseResource;
 
 /**
@@ -22,14 +23,15 @@ class StagedCreditReceptionsResource extends BaseResource
      * @param int $id
      * @return StagedCreditReception
      * @throws RequestException
+     * @throws BadResponseException
      */
-    public function get(int $id)
+    public function get(int $id): StagedCreditReception
     {
-        $response = $this->client->request('GET', $this->resourceUri . "/" . $id, []);
+        $response = $this->client->get("{$this->resourceUri}/{$id}", []);
 
         $mapper = new StagedCreditReceptionMapper();
 
-        return $mapper->mapFromResponse($this->getDataFromResponse($response));
+        return $mapper->map($response->getData());
     }
 
     /**
@@ -37,9 +39,10 @@ class StagedCreditReceptionsResource extends BaseResource
      * @param $email
      * @param null $locale
      * @return StagedCreditReception
+     * @throws BadResponseException
      * @throws RequestException
      */
-    public function send($hash, $email, $locale = null)
+    public function send($hash, $email, $locale = null): StagedCreditReception
     {
         $body = [
             "hash" => $hash,
@@ -47,11 +50,11 @@ class StagedCreditReceptionsResource extends BaseResource
             "locale" => $locale
         ];
 
-        $response = $this->client->request('POST', $this->resourceUri . '/send', $body);
+        $response = $this->client->post("{$this->resourceUri}/send", $body);
 
         $mapper = new StagedCreditReceptionMapper();
 
-        return $mapper->mapFromResponse($this->getDataFromResponse($response));
+        return $mapper->map($response->getData());
     }
 
     /**
@@ -59,9 +62,10 @@ class StagedCreditReceptionsResource extends BaseResource
      * @param int $purchaseAmount
      * @param int|null $credits
      * @return StagedCreditReception
+     * @throws BadResponseException
      * @throws RequestException
      */
-    public function create(int $shopId, int $purchaseAmount, int $credits = null)
+    public function create(int $shopId, int $purchaseAmount, int $credits = null): StagedCreditReception
     {
         $body = [
             "shop_id" => $shopId,
@@ -69,10 +73,10 @@ class StagedCreditReceptionsResource extends BaseResource
             "credits" => $credits,
         ];
 
-        $response = $this->client->request('POST', $this->resourceUri, $body);
+        $response = $this->client->post($this->resourceUri, $body);
 
         $mapper = new StagedCreditReceptionMapper();
 
-        return $mapper->mapFromResponse($this->getDataFromResponse($response));
+        return $mapper->map($response->getData());
     }
 }

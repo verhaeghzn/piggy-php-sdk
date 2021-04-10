@@ -3,27 +3,24 @@ With [Piggy's](https://www.piggy.eu/) all-in-one platform you can strengthen loy
 
 ## Setup ##
 
-<b>Composer:</b>
+**Composer:**
 
-```composer require "piggy/piggy-php-sdk"```
+    composer require "piggy/piggy-php-sdk"
 
 ## Quickstart ##
 
-<b>Example with Register Client</b>
-```
-$apiKey = 'xxxx-xxxx-xxxx';
+**Example with Register Client**
+    
+    $apiKey = 'xxxx-xxxx-xxxx';
+    $client = new Piggy\Api\RegisterClient($apiKey);
+   
+**Example with OAuth Client**
 
-$client = new Piggy\Api\RegisterClient($apiKey);
-```
-
-<b>Example with OAuth Client</b>
-```
-$clientId = 'xxxx';
-$clientSecret = 'xxxxxxxxxxx';
-
-$client = new Piggy\Api\OAuthClient($clientId, $clientSecret);
-
-$access_token = $client->getAccessToken();    
-
-$client->setAccessToken($access_token);
-```
+    $clientId = 'xxxx';
+    $clientSecret = 'xxx-xxxxxxx';
+    
+    $client = new Piggy\Api\OAuthClient($clientId, $clientSecret);
+    
+    $access_token = $client->getAccessToken();    
+    
+    $client->setAccessToken($access_token);

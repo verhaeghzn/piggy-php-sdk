@@ -2,7 +2,8 @@
 
 namespace Piggy\Api\Mappers;
 
-use Piggy\Api\Model\CreditBalance;
+use Piggy\Api\Models\CreditBalance;
+use Piggy\Api\Models\Member;
 
 /**
  * Class CreditBalanceMapper
@@ -11,14 +12,13 @@ use Piggy\Api\Model\CreditBalance;
 class CreditBalanceMapper
 {
     /**
-     * @param $response
+     * @param Member $member
+     * @param object $data
      * @return CreditBalance
      */
-    public function mapFromResponse($response): CreditBalance
+    public function map(Member $member, object $data): CreditBalance
     {
-        $creditBalance = new CreditBalance();
-
-        $creditBalance->setBalance($response->balance);
+        $creditBalance = new CreditBalance($member, $data->balance);
 
         return $creditBalance;
     }

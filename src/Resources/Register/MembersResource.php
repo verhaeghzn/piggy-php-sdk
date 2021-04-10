@@ -2,11 +2,12 @@
 
 namespace Piggy\Api\Resources\Register;
 
+use Piggy\Api\Exceptions\BadResponseException;
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\MemberMapper;
-use Piggy\Api\Mappers\MemberResponseMapper;
-use Piggy\Api\Model\Member;
-use Piggy\Api\Model\MemberResponse;
+use Piggy\Api\Mappers\MemberAndCreditBalanceResponseMapper;
+use Piggy\Api\Models\Member;
+use Piggy\Api\Models\MemberResponse;
 use Piggy\Api\Resources\BaseResource;
 
 /**
@@ -24,6 +25,7 @@ class MembersResource extends BaseResource
      * @param string $email
      * @return Member
      * @throws RequestException
+     * @throws BadResponseException
      */
     public function create(string $email): Member
     {
@@ -31,16 +33,17 @@ class MembersResource extends BaseResource
             "email" => $email,
         ];
 
-        $response = $this->client->request('POST', $this->resourceUri, $body);
+        $response = $this->client->post($this->resourceUri, $body);
 
         $mapper = new MemberMapper();
 
-        return $mapper->mapFromResponse($this->getDataFromResponse($response));
+        return $mapper->map($response->getData());
     }
 
     /**
      * @param string $email
      * @return MemberResponse
+     * @throws BadResponseException
      * @throws RequestException
      */
     public function findOneBy(string $email): MemberResponse
@@ -49,26 +52,26 @@ class MembersResource extends BaseResource
             "email" => $email,
         ];
 
-        $response = $this->client->request('GET', $this->resourceUri . "/find-one-by", $body);
+        $response = $this->client->get("{$this->resourceUri}/find-one-by", $body);
 
-        $mapper = new MemberResponseMapper();
+        $mapper = new MemberAndCreditBalanceResponseMapper();
 
-        return $mapper->mapFromResponse($this->getDataFromResponse($response));
+        return $mapper->map($response->getData());
     }
 
     /**
      * @param int $id
      * @return MemberResponse
+     * @throws BadResponseException
      * @throws RequestException
-     *
      */
     public function get(int $id): MemberResponse
     {
-        $response = $this->client->request('GET', $this->resourceUri . "/" . $id, []);
+        $response = $this->client->get("{$this->resourceUri}/{$id}");
 
-        $mapper = new MemberResponseMapper();
+        $mapper = new MemberAndCreditBalanceResponseMapper();
 
-        return $mapper->mapFromResponse($this->getDataFromResponse($response));
+        return $mapper->map($response->getData());
     }
 
 //    /**
@@ -81,12 +84,8 @@ class MembersResource extends BaseResource
 //    {
 //        $response = $this->client->request('PUT', $this->resourceUri . "/" . $id, $fields);
 //
-//        $mapper = new MemberResponseMapper();
+//        $mapper = new MemberAndCreditBalanceResponseMapper();
 //
-//        return $mapper->mapFromResponse($this->getDataFromResponse($response));
+//        return $mapper->map($response->getData());
 //    }
-
-    // Not necessary since we already got credit balance at the show call?
-    // public function getCreditBalance(int $id)
-
 }

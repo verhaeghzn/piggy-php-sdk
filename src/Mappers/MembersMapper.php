@@ -12,13 +12,13 @@ class MembersMapper
      * @param $response
      * @return array
      */
-    public function mapFromResponse($response): array
+    public function map($response): array
     {
         $members = [];
         $memberMapper = new MemberMapper();
 
         foreach ($response as $item) {
-            $members[] = $memberMapper->mapFromResponse($item);
+            $members[] = $memberMapper->map($item);
         }
 
         return $members;

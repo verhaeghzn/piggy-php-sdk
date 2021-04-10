@@ -12,13 +12,13 @@ class CustomersMapper
      * @param $response
      * @return array
      */
-    public function mapFromResponse($response): array
+    public function map($response): array
     {
         $customers = [];
         $customerMapper = new CustomerMapper();
 
         foreach ($response as $item) {
-            $customers[] = $customerMapper->mapFromResponse($item);
+            $customers[] = $customerMapper->map($item);
         }
 
         return $customers;

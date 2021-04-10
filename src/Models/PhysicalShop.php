@@ -1,10 +1,10 @@
 <?php
 
-namespace Piggy\Api\Model;
+namespace Piggy\Api\Models;
 
 /**
  * Class PhysicalShop
- * @package Piggy\Api\Model
+ * @package Piggy\Api\Models
  */
 class PhysicalShop extends Shop
 {

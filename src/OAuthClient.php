@@ -2,9 +2,10 @@
 
 namespace Piggy\Api;
 
+use GuzzleHttp\ClientInterface;
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Http\BaseClient;
-use Piggy\Api\Traits\SetsOAuthResources as OAuthResources;
+use Piggy\Api\Http\Traits\SetsOAuthResources as OAuthResources;
 
 /**
  * Class OAuthClient
@@ -22,21 +23,35 @@ class OAuthClient extends BaseClient
 
     /**
      * OAuthClient constructor.
-     * @param string $clientId
+     * @param $clientId
      * @param string $clientSecret
+     * @param ClientInterface|null $client
      */
-    public function __construct(string $clientId, string $clientSecret)
+    public function __construct($clientId, string $clientSecret, ?ClientInterface $client = null)
     {
-        parent::__construct();
-
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
+
+        parent::__construct($client);
 
         $this->setResources($this);
     }
 
     /**
+     * @return Http\Responses\Response
+     * @throws Exceptions\BadResponseException
+     * @throws RequestException
+     */
+    public function ping()
+    {
+        $response = $this->get("/api/v2/oauth/clients", []);
+
+        return $response;
+    }
+
+    /**
      * @return string
+     * @throws Exceptions\BadResponseException
      * @throws RequestException
      */
     public function getAccessToken(): string
@@ -47,11 +62,9 @@ class OAuthClient extends BaseClient
             "client_secret" => $this->clientSecret
         ];
 
-        $response = $this->request("POST", "/oauth/token", $body);
+        $response = $this->authenticationRequest("/oauth/token", $body);
 
-        $clientToken = json_decode($response->getBody()->getContents(), true);
-
-        return $clientToken['access_token'];
+        return $response->getAccessToken();
     }
 
     /**

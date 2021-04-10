@@ -2,10 +2,11 @@
 
 namespace Piggy\Api\Resources\OAuth;
 
+use Piggy\Api\Exceptions\BadResponseException;
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\CreditReceptionMapper;
-use Piggy\Api\Model\CreditReception;
-use Piggy\Api\Model\Member;
+use Piggy\Api\Models\CreditReception;
+use Piggy\Api\Models\Member;
 use Piggy\Api\Resources\BaseResource;
 
 /**
@@ -23,14 +24,15 @@ class CreditReceptionsResource extends BaseResource
      * @param int $id
      * @return CreditReception|Member
      * @throws RequestException
+     * @throws BadResponseException
      */
-    public function get(int $id)
+    public function get(int $id): CreditReception
     {
-        $response = $this->client->request("GET", $this->resourceUri . "/" . $id, []);
+        $response = $this->client->get($this->resourceUri . "/" . $id, []);
 
         $mapper = new CreditReceptionMapper();
 
-        return $mapper->mapFromResponse($this->getDataFromResponse($response));
+        return $mapper->map($response->getData());
     }
 
     /**
@@ -39,9 +41,10 @@ class CreditReceptionsResource extends BaseResource
      * @param int|null $memberId
      * @param int|null $loyaltyCardId
      * @return CreditReception|Member
+     * @throws BadResponseException
      * @throws RequestException
      */
-    public function create(int $shopId, int $purchaseAmount, int $memberId = null, int $loyaltyCardId = null)
+    public function create(int $shopId, int $purchaseAmount, int $memberId = null, int $loyaltyCardId = null): CreditReception
     {
         $body = [
             "shop_id" => $shopId,
@@ -50,10 +53,10 @@ class CreditReceptionsResource extends BaseResource
             "loyalty_card_id" => $loyaltyCardId
         ];
 
-        $response = $this->client->request("POST", $this->resourceUri, $body);
+        $response = $this->client->post($this->resourceUri, $body);
 
         $mapper = new CreditReceptionMapper();
 
-        return $mapper->mapFromResponse($this->getDataFromResponse($response));
+        return $mapper->map($response->getData());
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Piggy\Api\Traits;
+namespace Piggy\Api\Http\Traits;
 
 use Piggy\Api\Http\BaseClient;
 use Piggy\Api\Resources\Customer\ProfileResource;

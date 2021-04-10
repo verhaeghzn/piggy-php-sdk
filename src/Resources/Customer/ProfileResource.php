@@ -2,11 +2,16 @@
 
 namespace Piggy\Api\Resources\Customer;
 
+use Exception;
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\CustomerMapper;
-use Piggy\Api\Model\Customer;
+use Piggy\Api\Models\Customer;
 use Piggy\Api\Resources\BaseResource;
 
+/**
+ * Class ProfileResource
+ * @package Piggy\Api\Resources\Customer
+ */
 class ProfileResource extends BaseResource
 {
     /**
@@ -17,13 +22,14 @@ class ProfileResource extends BaseResource
     /**
      * @return Customer
      * @throws RequestException
+     * @throws Exception
      */
     public function show(): Customer
     {
-        $response = $this->client->request('GET', $this->resourceUri, []);
+        $response = $this->client->get($this->resourceUri, []);
 
         $mapper = new CustomerMapper();
 
-        return $mapper->mapFromResponse($this->getDataFromResponse($response));
+        return $mapper->map($response->getData());
     }
 }

@@ -2,8 +2,10 @@
 
 namespace Piggy\Api\Mappers;
 
-use Piggy\Api\Model\CreditReception;
-use Piggy\Api\Model\Member;
+use DateTime;
+use Exception;
+use Piggy\Api\Models\CreditReception;
+use Piggy\Api\Models\Member;
 
 /**
  * Class CreditReceptionMapper
@@ -13,17 +15,16 @@ class CreditReceptionMapper
 {
     /**
      * @param $response
-     * @return Member
+     * @return CreditReception
+     * @throws Exception
      */
-    public function mapFromResponse($response): CreditReception
+    public function map($response): CreditReception
     {
-        $creditReception = new CreditReception();
         $memberMapper = new MemberMapper();
+        $member = $memberMapper->map($response->member);
 
-        $creditReception->setId($response->id);
-        $creditReception->setCredits($response->credits);
-        $creditReception->setCreatedAt($response->created_at);
-        $creditReception->setMember($memberMapper->mapFromResponse($response->member));
+//        $createdAt = new DateTime($response->created_at);
+        $creditReception = new CreditReception($response->id, $response->credits, $member, $response->created_at);
 
         return $creditReception;
     }

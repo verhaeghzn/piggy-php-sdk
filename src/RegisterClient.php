@@ -3,7 +3,7 @@
 namespace Piggy\Api;
 
 use Piggy\Api\Http\BaseClient;
-use Piggy\Api\Traits\SetsRegisterResources as RegisterResources;
+use Piggy\Api\Http\Traits\SetsRegisterResources as RegisterResources;
 
 /**
  * Class RegisterClient
