@@ -3,6 +3,7 @@
 namespace Piggy\Api\Models\Loyalty;
 
 use DateTime;
+use Exception;
 
 /**
  * Class CreditReception
@@ -21,7 +22,7 @@ class CreditReception
     protected $credits;
 
     /**s
-     * @var string
+     * @var DateTime
      */
     protected $createdAt;
 
@@ -30,13 +31,20 @@ class CreditReception
      */
     protected $member;
 
-    // Created at > DateTime
+    /**
+     * CreditReception constructor.
+     * @param $id
+     * @param int $credits
+     * @param Member $member
+     * @param string $createdAt
+     * @throws Exception
+     */
     public function __construct($id, int $credits, Member $member, string $createdAt)
     {
         $this->id = $id;
         $this->credits = $credits;
         $this->member = $member;
-        $this->createdAt = $createdAt;
+        $this->createdAt = new DateTime($createdAt);
     }
 
     /**
@@ -56,9 +64,9 @@ class CreditReception
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }

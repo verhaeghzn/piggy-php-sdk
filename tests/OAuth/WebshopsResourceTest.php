@@ -2,23 +2,19 @@
 
 namespace Tests\OAuth;
 
-use GuzzleHttp\Client as HttpClient;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Models\Shops\Webshop;
-use Piggy\Api\OAuthClient;
+use Tests\OAuthTestCase;
 
 /**
  * Class WebshopsResource
  * @package Tests\OAuth
  */
-class WebshopsResourceTest extends TestCase
+class WebshopsResourceTest extends OAuthTestCase
 {
     /**
      * @test
-     * @throws \Piggy\Api\Exceptions\RequestException
+     * @throws RequestException
      */
     public function it_returns_all_webshops()
     {
@@ -26,31 +22,18 @@ class WebshopsResourceTest extends TestCase
         $webshop2 = new Webshop(2, "webshop 2");
         $webshops = [$webshop1, $webshop1];
 
-        //create response
-        $mock = new MockHandler([
-            new Response(200, [], json_encode([
-                "data" => [
-                    [
-                        "id" => $webshop1->getId(),
-                        "name" => $webshop1->getName(),
-                    ],
-                    [
-                        "id" => $webshop2->getId(),
-                        "name" => $webshop2->getName(),
-                    ]
-                ],
-                "meta" => []
-            ])),
+        $this->addExpectedResponse([
+            [
+                "id" => $webshop1->getId(),
+                "name" => $webshop1->getName(),
+            ],
+            [
+                "id" => $webshop2->getId(),
+                "name" => $webshop2->getName(),
+            ]
         ]);
 
-        $handlerStack = HandlerStack::create($mock);
-
-        $httpClient = new HttpClient(['handler' => $handlerStack]);
-
-        $oauthClient = new OAuthClient("1", "1", $httpClient);
-        $oauthClient->addHeader("Authorization", 'Bearer token');
-
-        $data = $oauthClient->webshops->all();
+        $data = $this->mockedClient->webshops->all();
 
         $fetchedWebshop1 = $data[0];
         $fetchedWebshop2 = $data[1];
