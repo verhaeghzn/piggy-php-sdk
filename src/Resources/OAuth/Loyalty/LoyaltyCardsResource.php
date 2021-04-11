@@ -6,6 +6,7 @@ use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\Loyalty\LoyaltyCardMapper;
 use Piggy\Api\Models\Loyalty\LoyaltyCard;
 use Piggy\Api\Models\Loyalty\Member;
+use Piggy\Api\Models\Shops\Shop;
 use Piggy\Api\Resources\BaseResource;
 
 /**
@@ -20,19 +21,19 @@ class LoyaltyCardsResource extends BaseResource
     protected $resourceUri = "/api/v2/oauth/clients/";
 
     /**
-     * @param int $shopId
+     * @param Shop $shop
      * @param string $hash
      * @return LoyaltyCard
      * @throws RequestException
      */
-    public function findOneBy(int $shopId, string $hash): LoyaltyCard
+    public function findOneBy(Shop $shop, string $hash): LoyaltyCard
     {
         $body = [
-            "shop_id" => $shopId,
+            "shop_id" => $shop->getId(),
             "hash" => $hash,
         ];
 
-        $response = $this->client->get( "{$this->resourceUri}/loyalty-cards/find-one-by", $body);
+        $response = $this->client->get("{$this->resourceUri}/loyalty-cards/find-one-by", $body);
 
         $mapper = new LoyaltyCardMapper();
 
@@ -40,21 +41,19 @@ class LoyaltyCardsResource extends BaseResource
     }
 
     /**
-     * @param int $shopId
+     * @param Shop $shop
      * @param Member $member
      * @param LoyaltyCard $loyaltyCard
      * @return LoyaltyCard
      * @throws RequestException
      */
-    public function link(int $shopId, Member $member, LoyaltyCard $loyaltyCard): LoyaltyCard
+    public function link(Shop $shop, Member $member, LoyaltyCard $loyaltyCard): LoyaltyCard
     {
-        $body = [
-            "shop_id" => $shopId,
+        $response = $this->client->post("{$this->resourceUri}/link-loyalty-card", [
+            "shop_id" => $shop->getId(),
             "member_id" => $member->getId(),
             "loyalty_card_id" => $loyaltyCard->getId(),
-        ];
-
-        $response = $this->client->post( "{$this->resourceUri}/link-loyalty-card", $body);
+        ]);
 
         $mapper = new LoyaltyCardMapper();
 

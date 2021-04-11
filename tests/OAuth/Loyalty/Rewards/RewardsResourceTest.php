@@ -1,18 +1,17 @@
 <?php
 
-namespace Tests\OAuth\Loyalty\Rewards;
+namespace Piggy\Api\Tests\OAuth\Loyalty\Rewards;
 
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Models\Loyalty\Rewards\DigitalReward;
 use Piggy\Api\Models\Loyalty\Rewards\ExternalReward;
 use Piggy\Api\Models\Loyalty\Rewards\PhysicalReward;
-use Piggy\Api\Models\Shops\Shop;
-use Piggy\Api\Models\Shops\Webshop;
-use Tests\OAuthTestCase;
+use Piggy\Api\Models\Shops\PhysicalShop;
+use Piggy\Api\Tests\OAuthTestCase;
 
 /**
  * Class RewardsResourceTest
- * @package Tests\OAuth\Shops
+ * @package Piggy\Api\Tests\OAuth\Loyalty\Rewards
  */
 class RewardsResourceTest extends OAuthTestCase
 {
@@ -20,8 +19,9 @@ class RewardsResourceTest extends OAuthTestCase
      * @test
      * @throws RequestException
      */
-    public function it_returns_all_webshops()
+    public function it_returns_all_rewards()
     {
+        $shop = new PhysicalShop(1, "Shop");
         $digitalReward1 = new DigitalReward(1, "digital reward 1");
         $digitalReward2 = new DigitalReward(2, "digital reward 2");
 
@@ -80,7 +80,7 @@ class RewardsResourceTest extends OAuthTestCase
             ]
         ]);
 
-        $data = $this->mockedClient->rewards->all(1);
+        $data = $this->mockedClient->rewards->all($shop);
 
         $physicalRewards = $data["physical"];
         $digitalRewards = $data["digital"];

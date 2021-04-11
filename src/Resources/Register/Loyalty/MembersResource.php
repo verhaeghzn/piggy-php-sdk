@@ -27,11 +27,9 @@ class MembersResource extends BaseResource
      */
     public function create(string $email): Member
     {
-        $body = [
+        $response = $this->client->post($this->resourceUri, [
             "email" => $email,
-        ];
-
-        $response = $this->client->post($this->resourceUri, $body);
+        ]);
 
         $mapper = new MemberMapper();
 
@@ -45,11 +43,9 @@ class MembersResource extends BaseResource
      */
     public function findOneBy(string $email): MemberResponse
     {
-        $body = [
+        $response = $this->client->get("{$this->resourceUri}/find-one-by", [
             "email" => $email,
-        ];
-
-        $response = $this->client->get("{$this->resourceUri}/find-one-by", $body);
+        ]);
 
         $mapper = new MemberAndCreditBalanceResponseMapper();
 

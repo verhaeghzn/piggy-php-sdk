@@ -7,6 +7,7 @@ use Piggy\Api\Models\Loyalty\RewardReceptions\ExternalRewardReception;
 use Piggy\Api\Models\Loyalty\Rewards\Reward;
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Models\Loyalty\LoyaltyCard;
+use Piggy\Api\Models\Shops\Shop;
 use Piggy\Api\Resources\BaseResource;
 
 /**
@@ -21,21 +22,19 @@ class ExternalRewardReceptionsResource extends BaseResource
     protected $resourceUri = "/api/v2/oauth/clients/rewards/external";
 
     /**
-     * @param int $shopId
+     * @param Shop $shop
      * @param Reward $reward
      * @param LoyaltyCard $loyaltyCard
      * @return ExternalRewardReception
      * @throws RequestException
      */
-    public function create(int $shopId, Reward $reward, LoyaltyCard $loyaltyCard): ExternalRewardReception
+    public function create(Shop $shop, Reward $reward, LoyaltyCard $loyaltyCard): ExternalRewardReception
     {
-        $body = [
-            "shop_id" => $shopId,
+        $response = $this->client->post("{$this->resourceUri}/reward-reception", [
+            "shop_id" => $shop->getId(),
             "reward_id" => $reward->getId(),
             "loyalty_card_id" => $loyaltyCard->getId()
-        ];
-
-        $response = $this->client->post("{$this->resourceUri}/reward-reception", $body);
+        ]);
 
         $mapper = new ExternalRewardReceptionsMapper();
 

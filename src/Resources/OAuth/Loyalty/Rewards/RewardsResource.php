@@ -4,6 +4,7 @@ namespace Piggy\Api\Resources\OAuth\Loyalty\Rewards;
 
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\Loyalty\Rewards\RewardsMapper;
+use Piggy\Api\Models\Shops\Shop;
 use Piggy\Api\Resources\BaseResource;
 
 /**
@@ -18,17 +19,15 @@ class RewardsResource extends BaseResource
     protected $resourceUri = "/api/v2/oauth/clients/rewards";
 
     /**
-     * @param int $shopId
+     * @param Shop $shop
      * @return array
      * @throws RequestException
      */
-    public function all(int $shopId): array
+    public function all(Shop $shop): array
     {
-        $body = [
-            "shop_id" => $shopId,
-        ];
-
-        $response = $this->client->get($this->resourceUri, $body);
+        $response = $this->client->get($this->resourceUri, [
+            "shop_id" => $shop->getId(),
+        ]);
 
         $mapper = new RewardsMapper();
 

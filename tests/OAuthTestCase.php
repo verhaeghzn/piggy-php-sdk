@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Piggy\Api\Tests;
 
 use Piggy\Api\OAuthClient;
 

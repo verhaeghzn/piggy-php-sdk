@@ -24,7 +24,7 @@ class RegisterResource extends BaseResource
      */
     public function get(): Register
     {
-        $response = $this->client->get($this->resourceUri, []);
+        $response = $this->client->get($this->resourceUri);
 
         $mapper = new RegisterMapper();
 

@@ -1,12 +1,15 @@
 <?php
 
-namespace Tests;
+namespace Piggy\Api\Tests;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\Response;
+use Piggy\Api\Models\Loyalty\Member;
+use Piggy\Api\Models\Shops\PhysicalShop;
+use Piggy\Api\Models\Shops\Shop;
 
 /**
  * Class BaseTestCase
@@ -60,5 +63,19 @@ class BaseTestCase extends TestCase
     public function getMockHandler(): MockHandler
     {
         return $this->mockHandler;
+    }
+
+    public function createMember(): Member
+    {
+        $member = new Member(1, "piggy@piggy.nl");
+
+        return $member;
+    }
+
+    public function createShop(): Shop
+    {
+        $shop = new PhysicalShop(1, "Shop name");
+
+        return $shop;
     }
 }

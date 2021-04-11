@@ -1,19 +1,19 @@
 <?php
 
-namespace Tests\OAuth\Loyalty;
+namespace Piggy\Api\Tests\OAuth\Loyalty;
 
 use Exception;
 use Piggy\Api\Enum\CardStatus;
 use Piggy\Api\Enum\CardType;
 use Piggy\Api\Exceptions\RequestException;
-use Piggy\Api\Models\Loyalty\CreditReception;
 use Piggy\Api\Models\Loyalty\LoyaltyCard;
 use Piggy\Api\Models\Loyalty\Member;
-use Tests\OAuthTestCase;
+use Piggy\Api\Models\Shops\PhysicalShop;
+use Piggy\Api\Tests\OAuthTestCase;
 
 /**
  * Class LoyaltyCardsResourceTest
- * @package Tests\OAuth\Loyalty
+ * @package Piggy\Api\Tests\OAuth\Loyalty
  */
 class LoyaltyCardsResourceTest extends OAuthTestCase
 {
@@ -25,6 +25,7 @@ class LoyaltyCardsResourceTest extends OAuthTestCase
     public function it_returns_a_loyalty_card()
     {
         $member = new Member(1, "tests@piggy.nl");
+        $shop = new PhysicalShop(1, "Shop");
 
         $loyaltyCard = new LoyaltyCard(1, "1234", CardType::PHYSICAL, CardStatus::ACTIVE, $member);
 
@@ -39,7 +40,7 @@ class LoyaltyCardsResourceTest extends OAuthTestCase
             ],
         ]);
 
-        $data = $this->mockedClient->loyaltyCards->findOneBy(1, "1234");
+        $data = $this->mockedClient->loyaltyCards->findOneBy($shop, "1234");
 
         $this->assertEquals($data->getId(), $loyaltyCard->getId());
         $this->assertEquals($data->getHash(), $loyaltyCard->getHash());
@@ -57,7 +58,7 @@ class LoyaltyCardsResourceTest extends OAuthTestCase
     public function it_returns_a_loyalty_card_after_linking()
     {
         $member = new Member(1, "tests@piggy.nl");
-
+        $shop = new PhysicalShop(1, "Shop");
         $loyaltyCard = new LoyaltyCard(1, "1234", CardType::PHYSICAL, CardStatus::ACTIVE, $member);
 
         $this->addExpectedResponse([
@@ -71,7 +72,7 @@ class LoyaltyCardsResourceTest extends OAuthTestCase
             ],
         ]);
 
-        $data = $this->mockedClient->loyaltyCards->link(1, $member, $loyaltyCard);
+        $data = $this->mockedClient->loyaltyCards->link($shop, $member, $loyaltyCard);
 
         $this->assertEquals($data->getId(), $loyaltyCard->getId());
         $this->assertEquals($data->getHash(), $loyaltyCard->getHash());

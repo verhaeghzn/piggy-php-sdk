@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\OAuth\Loyalty\Rewards;
+namespace Piggy\Api\Tests\OAuth\Loyalty\Rewards;
 
 use Piggy\Api\Enum\CardStatus;
 use Piggy\Api\Enum\CardType;
@@ -9,11 +9,12 @@ use Piggy\Api\Models\Loyalty\LoyaltyCard;
 use Piggy\Api\Models\Loyalty\Member;
 use Piggy\Api\Models\Loyalty\RewardReceptions\PhysicalRewardReception;
 use Piggy\Api\Models\Loyalty\Rewards\PhysicalReward;
-use Tests\OAuthTestCase;
+use Piggy\Api\Models\Shops\PhysicalShop;
+use Piggy\Api\Tests\OAuthTestCase;
 
 /**
  * Class PhysicalRewardReceptionTest
- * @package Tests\OAuth\Loyalty\Rewards
+ * @package Piggy\Api\Tests\OAuth\Loyalty\Rewards
  */
 class PhysicalRewardReceptionTest extends OAuthTestCase
 {
@@ -24,8 +25,10 @@ class PhysicalRewardReceptionTest extends OAuthTestCase
     public function it_returns_a_physical_reward_reception()
     {
         $member = new Member(1, "tests@piggy.nl");
+        $shop = new PhysicalShop(1, "Shop");
         $physicalReward = new PhysicalReward(1, "test reward");
-        $physicalRewardReception = new PhysicalRewardReception(1, "test reward reception", 100, $member, $physicalReward);
+        $physicalRewardReception = new PhysicalRewardReception(1, "test reward reception", 100, $member,
+            $physicalReward);
 
         $this->addExpectedResponse([
             "id" => $physicalRewardReception->getId(),
@@ -42,14 +45,16 @@ class PhysicalRewardReceptionTest extends OAuthTestCase
         ]);
 
         $loyaltyCard = new LoyaltyCard(1, "1234", CardType::PHYSICAL, CardStatus::ACTIVE, $member);
-        $data = $this->mockedClient->physicalRewardReceptions->create(1, $physicalReward, $loyaltyCard);
+        $data = $this->mockedClient->physicalRewardReceptions->create($shop, $physicalReward, $loyaltyCard);
 
         $this->assertEquals($data->getId(), $physicalRewardReception->getId());
         $this->assertEquals($data->getCredits(), $physicalRewardReception->getCredits());
         $this->assertEquals($data->getTitle(), $physicalRewardReception->getTitle());
 
-        $this->assertEquals($data->getPhysicalReward()->getId(), $physicalRewardReception->getPhysicalReward()->getId());
-        $this->assertEquals($data->getPhysicalReward()->getTitle(), $physicalRewardReception->getPhysicalReward()->getTitle());
+        $this->assertEquals($data->getPhysicalReward()->getId(),
+            $physicalRewardReception->getPhysicalReward()->getId());
+        $this->assertEquals($data->getPhysicalReward()->getTitle(),
+            $physicalRewardReception->getPhysicalReward()->getTitle());
 
         $this->assertEquals($data->getMember()->getId(), $physicalRewardReception->getMember()->getId());
         $this->assertEquals($data->getMember()->getEmail(), $physicalRewardReception->getMember()->getEmail());

@@ -49,14 +49,12 @@ class CreditReceptionsResource extends BaseResource
         int $purchaseAmount,
         ?LoyaltyCard $loyaltyCard = null
     ): CreditReception {
-        $body = [
+        $response = $this->client->post($this->resourceUri, [
             "shop_id" => $shop->getId(),
             "member_id" => $member->getId(),
             "purchase_amount" => $purchaseAmount,
             "loyalty_card_id" => $loyaltyCard->getId(),
-        ];
-
-        $response = $this->client->post($this->resourceUri, $body);
+        ]);
 
         $mapper = new CreditReceptionMapper();
 

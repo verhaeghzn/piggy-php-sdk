@@ -1,15 +1,16 @@
 <?php
 
-namespace Tests\OAuth\Loyalty;
+namespace Piggy\Api\Tests\OAuth\Loyalty;
 
 use Exception;
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Models\Loyalty\CreditReception;
 use Piggy\Api\Models\Loyalty\Member;
-use Tests\OAuthTestCase;
+use Piggy\Api\Tests\OAuthTestCase;
 
 /**
  * Class CreditReceptionsResourceTest
+ * @package Piggy\Api\Tests\OAuth\Loyalty
  */
 class CreditReceptionsResourceTest extends OAuthTestCase
 {

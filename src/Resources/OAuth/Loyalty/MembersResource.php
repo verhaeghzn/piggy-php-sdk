@@ -7,6 +7,7 @@ use Piggy\Api\Mappers\Loyalty\MemberAndCreditBalanceResponseMapper;
 use Piggy\Api\Mappers\Loyalty\MemberMapper;
 use Piggy\Api\Models\Loyalty\Member;
 use Piggy\Api\Models\Loyalty\MemberResponse;
+use Piggy\Api\Models\Shops\Shop;
 use Piggy\Api\Resources\BaseResource;
 
 /**
@@ -21,15 +22,15 @@ class MembersResource extends BaseResource
     protected $resourceUri = "/api/v2/oauth/clients/members";
 
     /**
-     * @param int $shopId
+     * @param Shop $shop
      * @param string $email
      * @return Member
      * @throws RequestException
      */
-    public function create(int $shopId, string $email): Member
+    public function create(Shop $shop, string $email): Member
     {
         $body = [
-            "shop_id" => $shopId,
+            "shop_id" => $shop->getId(),
             "email" => $email,
         ];
 
@@ -41,19 +42,19 @@ class MembersResource extends BaseResource
     }
 
     /**
-     * @param int $shopId
+     * @param Shop $shop
      * @param string $email
      * @return MemberResponse
      * @throws RequestException
      */
-    public function findOneBy(int $shopId, string $email): MemberResponse
+    public function findOneBy(Shop $shop, string $email): MemberResponse
     {
         $body = [
-            "shop_id" => $shopId,
+            "shop_id" => $shop->getId(),
             "email" => $email,
         ];
 
-        $response = $this->client->get( "{$this->resourceUri}/find-one-by", $body);
+        $response = $this->client->get("{$this->resourceUri}/find-one-by", $body);
 
         $mapper = new MemberAndCreditBalanceResponseMapper();
 
@@ -61,18 +62,16 @@ class MembersResource extends BaseResource
     }
 
     /**
-     * @param int $shopId
+     * @param Shop $shop
      * @param int $id
      * @return MemberResponse
      * @throws RequestException
      */
-    public function get(int $shopId, int $id): MemberResponse
+    public function get(Shop $shop, int $id): MemberResponse
     {
-        $body = [
-            "shop_id" => $shopId,
-        ];
-
-        $response = $this->client->get("{$this->resourceUri}/$id", $body);
+        $response = $this->client->get("{$this->resourceUri}/$id", [
+            "shop_id" => $shop->getId(),
+        ]);
 
         $mapper = new MemberAndCreditBalanceResponseMapper();
 

@@ -1,15 +1,16 @@
 <?php
 
-namespace Tests\OAuth\Loyalty;
+namespace Piggy\Api\Tests\OAuth\Loyalty;
 
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Models\Loyalty\CreditBalance;
 use Piggy\Api\Models\Loyalty\Member;
-use Tests\OAuthTestCase;
+use Piggy\Api\Models\Shops\PhysicalShop;
+use Piggy\Api\Tests\OAuthTestCase;
 
 /**
  * Class MembersResourceTest
- * @package Tests\OAuth\Resources
+ * @package Piggy\Api\Tests\OAuth\Loyalty
  */
 class MembersResourceTest extends OAuthTestCase
 {
@@ -19,13 +20,14 @@ class MembersResourceTest extends OAuthTestCase
      */
     public function it_returns_the_member_after_creation()
     {
-        $member = new Member(1, "mike@piggy.nl");
+        $member = $this->createMember();
+        $shop = new PhysicalShop(1, "Shop");
         $this->addExpectedResponse([
             "id" => $member->getId(),
             "email" => $member->getEmail(),
         ]);
 
-        $data = $this->mockedClient->members->create(1,'test@piggy.nl');
+        $data = $this->mockedClient->members->create($shop, 'test@piggy.nl');
 
         $this->assertEquals($member->getId(), $data->getId());
         $this->assertEquals($member->getEmail(), $data->getEmail());
@@ -36,7 +38,9 @@ class MembersResourceTest extends OAuthTestCase
      */
     public function it_returns_member_by_email()
     {
-        $member = new Member(1, "mike@piggy.nl");
+        $member = $this->createMember();
+        $shop = $this->createShop();
+
         $creditBalance = new CreditBalance($member, 100);
         $this->addExpectedResponse([
             "member" => [
@@ -49,7 +53,7 @@ class MembersResourceTest extends OAuthTestCase
             ],
         ]);
 
-        $data = $this->mockedClient->members->findOneBy(1,'tests@piggy.nl');
+        $data = $this->mockedClient->members->findOneBy($shop, 'tests@piggy.nl');
 
         $this->assertEquals($member->getEmail(), $data->getMember()->getEmail());
         $this->assertEquals($creditBalance->getBalance(), $data->getCreditBalance()->getBalance());
@@ -60,7 +64,9 @@ class MembersResourceTest extends OAuthTestCase
      */
     public function it_returns_member_by_id()
     {
-        $member = new Member(1, "mike@piggy.nl");
+        $member = $this->createMember();
+        $shop = $this->createShop();
+
         $creditBalance = new CreditBalance($member, 100);
         $this->addExpectedResponse([
             "member" => [
@@ -73,7 +79,7 @@ class MembersResourceTest extends OAuthTestCase
             ],
         ]);
 
-        $data = $this->mockedClient->members->findOneBy(1,1);
+        $data = $this->mockedClient->members->findOneBy($shop, "piggy@piggy.nl");
 
         $this->assertEquals($member->getEmail(), $data->getMember()->getEmail());
         $this->assertEquals($creditBalance->getBalance(), $data->getCreditBalance()->getBalance());

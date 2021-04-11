@@ -2,11 +2,11 @@
 
 namespace Piggy\Api;
 
-use Piggy\Api\Http\BaseClient;
 use Piggy\Api\Exceptions\RequestException;
+use Piggy\Api\Http\BaseClient;
+use Piggy\Api\Http\Traits\SetsCustomerResources as CustomerResources;
 use Piggy\Api\Mappers\OAuthTokenMapper;
 use Piggy\Api\Models\OAuthToken;
-use Piggy\Api\Http\Traits\SetsCustomerResources as CustomerResources;
 
 /**
  * Class CustomerClient
@@ -42,7 +42,6 @@ class CustomerClient extends BaseClient
     /**
      * @param string $code
      * @return OAuthToken
-     * @throws Exceptions\BadResponseException
      * @throws RequestException
      */
     public function getOAuthToken(string $code): OAuthToken

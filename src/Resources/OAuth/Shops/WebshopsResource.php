@@ -25,7 +25,7 @@ class WebshopsResource extends BaseResource
      */
     public function all(): array
     {
-        $response = $this->client->get($this->resourceUri, []);
+        $response = $this->client->get($this->resourceUri);
 
         $mapper = new WebshopsMapper();
 
@@ -39,7 +39,7 @@ class WebshopsResource extends BaseResource
      */
     public function get(int $id): Webshop
     {
-        $response = $this->client->get("{$this->resourceUri}/{$id}", []);
+        $response = $this->client->get("{$this->resourceUri}/{$id}");
 
         $mapper = new WebshopMapper();
 
