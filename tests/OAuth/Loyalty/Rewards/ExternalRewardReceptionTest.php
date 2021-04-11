@@ -6,10 +6,8 @@ use Piggy\Api\Enum\CardStatus;
 use Piggy\Api\Enum\CardType;
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Models\Loyalty\LoyaltyCard;
-use Piggy\Api\Models\Loyalty\Member;
 use Piggy\Api\Models\Loyalty\RewardReceptions\ExternalRewardReception;
 use Piggy\Api\Models\Loyalty\Rewards\ExternalReward;
-use Piggy\Api\Models\Shops\PhysicalShop;
 use Piggy\Api\Tests\OAuthTestCase;
 
 /**
@@ -24,8 +22,8 @@ class ExternalRewardReceptionTest extends OAuthTestCase
      */
     public function it_returns_a_external_reward_reception()
     {
-        $member = new Member(1, "tests@piggy.nl");
-        $shop = new PhysicalShop(1, "Shop");
+        $member = $this->createMember();
+        $shop = $this->createShop();
         $externalReward = new ExternalReward(1, "test reward");
         $externalRewardReception = new ExternalRewardReception(1, "test reward reception", 100, $member,
             $externalReward);

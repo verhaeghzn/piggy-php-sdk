@@ -5,7 +5,6 @@ namespace Piggy\Api\Tests\OAuth\Loyalty;
 use Exception;
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Models\Loyalty\CreditReception;
-use Piggy\Api\Models\Loyalty\Member;
 use Piggy\Api\Tests\OAuthTestCase;
 
 /**
@@ -21,7 +20,7 @@ class CreditReceptionsResourceTest extends OAuthTestCase
      */
     public function it_returns_a_credit_reception()
     {
-        $member = new Member(1, "tests@piggy.nl");
+        $member = $this->createMember();
         $creditReception = new CreditReception(1, 200, $member, "2021-04-10T08:04:01+00:00");
 
         $this->addExpectedResponse([

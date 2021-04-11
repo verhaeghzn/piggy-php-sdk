@@ -2,13 +2,13 @@
 
 namespace Piggy\Api\Tests\OAuth\Shops;
 
+use Piggy\Api\Enum\ShopType;
 use Piggy\Api\Exceptions\RequestException;
-use Piggy\Api\Models\Shops\Webshop;
 use Piggy\Api\Tests\OAuthTestCase;
 
 /**
- * Class WebshopsResource
- * @package Tests\OAuth
+ * Class WebshopsResourceTest
+ * @package Piggy\Api\Tests\OAuth\Shops
  */
 class WebshopsResourceTest extends OAuthTestCase
 {
@@ -18,8 +18,8 @@ class WebshopsResourceTest extends OAuthTestCase
      */
     public function it_returns_all_webshops()
     {
-        $webshop1 = new Webshop(1, "webshop 1");
-        $webshop2 = new Webshop(2, "webshop 2");
+        $webshop1 = $this->createShop(ShopType::WEB);
+        $webshop2 = $this->createShop(ShopType::WEB);
         $webshops = [$webshop1, $webshop1];
 
         $this->addExpectedResponse([
@@ -51,7 +51,7 @@ class WebshopsResourceTest extends OAuthTestCase
      */
     public function it_returns_a_webshop()
     {
-        $webshop = new Webshop(1, "webshop");
+        $webshop = $this->createShop(ShopType::WEB);
 
         $this->addExpectedResponse([
             "id" => $webshop->getId(),

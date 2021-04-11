@@ -6,10 +6,8 @@ use Piggy\Api\Enum\CardStatus;
 use Piggy\Api\Enum\CardType;
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Models\Loyalty\LoyaltyCard;
-use Piggy\Api\Models\Loyalty\Member;
 use Piggy\Api\Models\Loyalty\RewardReceptions\DigitalRewardReception;
 use Piggy\Api\Models\Loyalty\Rewards\DigitalReward;
-use Piggy\Api\Models\Shops\PhysicalShop;
 use Piggy\Api\Tests\OAuthTestCase;
 
 /**
@@ -24,8 +22,8 @@ class DigitalRewardReceptionTest extends OAuthTestCase
      */
     public function it_returns_a_digital_reward_reception()
     {
-        $member = new Member(1, "tests@piggy.nl");
-        $shop = new PhysicalShop(1, "Shop");
+        $member = $this->createMember();
+        $shop = $this->createShop();
         $digitalReward = new DigitalReward(1, "test reward");
         $digitalRewardReception = new DigitalRewardReception(1, "test reward reception", 100, $member, $digitalReward);
 

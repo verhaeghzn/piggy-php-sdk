@@ -7,8 +7,6 @@ use Piggy\Api\Enum\CardStatus;
 use Piggy\Api\Enum\CardType;
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Models\Loyalty\LoyaltyCard;
-use Piggy\Api\Models\Loyalty\Member;
-use Piggy\Api\Models\Shops\PhysicalShop;
 use Piggy\Api\Tests\OAuthTestCase;
 
 /**
@@ -24,9 +22,8 @@ class LoyaltyCardsResourceTest extends OAuthTestCase
      */
     public function it_returns_a_loyalty_card()
     {
-        $member = new Member(1, "tests@piggy.nl");
-        $shop = new PhysicalShop(1, "Shop");
-
+        $member = $this->createMember();
+        $shop = $this->createShop();
         $loyaltyCard = new LoyaltyCard(1, "1234", CardType::PHYSICAL, CardStatus::ACTIVE, $member);
 
         $this->addExpectedResponse([
@@ -57,8 +54,8 @@ class LoyaltyCardsResourceTest extends OAuthTestCase
      */
     public function it_returns_a_loyalty_card_after_linking()
     {
-        $member = new Member(1, "tests@piggy.nl");
-        $shop = new PhysicalShop(1, "Shop");
+        $member = $this->createMember();
+        $shop = $this->createShop();
         $loyaltyCard = new LoyaltyCard(1, "1234", CardType::PHYSICAL, CardStatus::ACTIVE, $member);
 
         $this->addExpectedResponse([

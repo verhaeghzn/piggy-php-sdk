@@ -15,7 +15,7 @@ class CreditBalance
     protected $member;
 
     /**
-     * @var CreditBalance
+     * @var int
      */
     private $balance;
 

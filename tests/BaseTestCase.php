@@ -7,9 +7,11 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\Response;
+use Piggy\Api\Enum\ShopType;
 use Piggy\Api\Models\Loyalty\Member;
 use Piggy\Api\Models\Shops\PhysicalShop;
 use Piggy\Api\Models\Shops\Shop;
+use Piggy\Api\Models\Shops\Webshop;
 
 /**
  * Class BaseTestCase
@@ -72,9 +74,13 @@ class BaseTestCase extends TestCase
         return $member;
     }
 
-    public function createShop(): Shop
+    public function createShop($shopType = ShopType::PHYSICAL): Shop
     {
-        $shop = new PhysicalShop(1, "Shop name");
+        if ($shopType == ShopType::PHYSICAL) {
+            $shop = new PhysicalShop(1, "Shop name");
+        } else {
+            $shop = new Webshop(1, "Shop name");
+        }
 
         return $shop;
     }

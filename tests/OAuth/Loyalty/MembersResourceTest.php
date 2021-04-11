@@ -4,8 +4,6 @@ namespace Piggy\Api\Tests\OAuth\Loyalty;
 
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Models\Loyalty\CreditBalance;
-use Piggy\Api\Models\Loyalty\Member;
-use Piggy\Api\Models\Shops\PhysicalShop;
 use Piggy\Api\Tests\OAuthTestCase;
 
 /**
@@ -20,17 +18,16 @@ class MembersResourceTest extends OAuthTestCase
      */
     public function it_returns_the_member_after_creation()
     {
-        $member = $this->createMember();
-        $shop = new PhysicalShop(1, "Shop");
+        $shop = $this->createShop();
         $this->addExpectedResponse([
-            "id" => $member->getId(),
-            "email" => $member->getEmail(),
+            "id" => 1,
+            "email" => "new@piggy.nl",
         ]);
 
-        $data = $this->mockedClient->members->create($shop, 'test@piggy.nl');
+        $data = $this->mockedClient->members->create($shop, 'new@piggy.nl');
 
-        $this->assertEquals($member->getId(), $data->getId());
-        $this->assertEquals($member->getEmail(), $data->getEmail());
+        $this->assertEquals(1, $data->getId());
+        $this->assertEquals("new@piggy.nl", $data->getEmail());
     }
 
     /**
@@ -40,20 +37,19 @@ class MembersResourceTest extends OAuthTestCase
     {
         $member = $this->createMember();
         $shop = $this->createShop();
-
         $creditBalance = new CreditBalance($member, 100);
+
         $this->addExpectedResponse([
             "member" => [
                 "id" => $member->getId(),
                 "email" => $member->getEmail(),
             ],
             "credit_balance" => [
-                "id" => 1,
-                "balance" => 100,
+                "balance" => $creditBalance->getBalance(),
             ],
         ]);
 
-        $data = $this->mockedClient->members->findOneBy($shop, 'tests@piggy.nl');
+        $data = $this->mockedClient->members->findOneBy($shop, $member->getEmail());
 
         $this->assertEquals($member->getEmail(), $data->getMember()->getEmail());
         $this->assertEquals($creditBalance->getBalance(), $data->getCreditBalance()->getBalance());

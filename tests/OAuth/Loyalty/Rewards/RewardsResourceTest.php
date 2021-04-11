@@ -6,7 +6,6 @@ use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Models\Loyalty\Rewards\DigitalReward;
 use Piggy\Api\Models\Loyalty\Rewards\ExternalReward;
 use Piggy\Api\Models\Loyalty\Rewards\PhysicalReward;
-use Piggy\Api\Models\Shops\PhysicalShop;
 use Piggy\Api\Tests\OAuthTestCase;
 
 /**
@@ -21,7 +20,7 @@ class RewardsResourceTest extends OAuthTestCase
      */
     public function it_returns_all_rewards()
     {
-        $shop = new PhysicalShop(1, "Shop");
+        $shop = $this->createShop();
         $digitalReward1 = new DigitalReward(1, "digital reward 1");
         $digitalReward2 = new DigitalReward(2, "digital reward 2");
 
