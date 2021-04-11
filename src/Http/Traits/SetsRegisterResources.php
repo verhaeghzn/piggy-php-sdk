@@ -3,7 +3,7 @@
 namespace Piggy\Api\Http\Traits;
 
 use Piggy\Api\Http\BaseClient;
-use Piggy\Api\Resources\Register\MembersResource;
+use Piggy\Api\Resources\OAuth\Loyalty\MembersResource;
 
 /**
  * Trait SetsRegisterResources
