@@ -2,27 +2,38 @@
 
 namespace Piggy\Api\Mappers\Loyalty;
 
+use DateTime;
+use Exception;
+use Piggy\Api\Mappers\BaseMapper;
 use Piggy\Api\Models\Loyalty\StagedCreditReception;
 
 /**
  * Class StagedCreditReceptionMapper
  * @package Piggy\Api\Mappers\Loyalty
  */
-class StagedCreditReceptionMapper
+class StagedCreditReceptionMapper extends BaseMapper
 {
     /**
-     * @param $response
+     * @param object $data
      * @return StagedCreditReception
+     * @throws Exception
      */
-    public function map($response): StagedCreditReception
+    public function map(object $data): StagedCreditReception
     {
-        $stagedCreditReception = new StagedCreditReception();
         $creditReceptionMapper = new CreditReceptionMapper();
 
-        $stagedCreditReception->setId($response->id);
-        $stagedCreditReception->setCredits($response->credits);
-        $stagedCreditReception->setCreatedAt($response->created_at);
-        $stagedCreditReception->setCreditReception($response->credit_reception ? $creditReceptionMapper->map($response->credit_reception) : null);
+        $creditReception = null;
+
+        if ($data->credit_reception) {
+            $creditReception = $creditReceptionMapper->map($data->credit_reception);
+        }
+
+        $stagedCreditReception = new StagedCreditReception(
+            1,
+            $data->credits,
+            $this->parseDate($data->created_at),
+            $creditReception
+        );
 
         return $stagedCreditReception;
     }

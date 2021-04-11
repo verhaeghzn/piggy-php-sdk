@@ -30,7 +30,14 @@ class RewardReception
      */
     protected $member;
 
-    public function __construct($id, string $title, int $credits, Member $member)
+    /**
+     * RewardReception constructor.
+     * @param int $id
+     * @param string $title
+     * @param int $credits
+     * @param Member $member
+     */
+    public function __construct(int $id, string $title, int $credits, Member $member)
     {
         $this->id = $id;
         $this->title = $title;

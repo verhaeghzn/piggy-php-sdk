@@ -20,10 +20,10 @@ class Member
 
     /**
      * Member constructor.
-     * @param $id
+     * @param int $id
      * @param string $email
      */
-    public function __construct($id, string $email)
+    public function __construct(int $id, string $email)
     {
         $this->id = $id;
         $this->email = $email;

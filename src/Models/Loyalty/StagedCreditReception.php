@@ -2,6 +2,8 @@
 
 namespace Piggy\Api\Models\Loyalty;
 
+use DateTime;
+
 /**
  * Class StagedCreditReception
  * @package Piggy\Api\Models\Loyalty
@@ -25,7 +27,7 @@ class StagedCreditReception
     protected $credits;
 
     /**
-     * @var string
+     * @var DateTime
      */
     protected $createdAt;
 
@@ -35,27 +37,30 @@ class StagedCreditReception
     protected $creditReception;
 
     /**
+     * StagedCreditReception constructor.
+     * @param int $id
+     * @param int $credits
+     * @param CreditReception|null $creditReception
+     * @param DateTime $createdAt
+     */
+    public function __construct(
+        int $id,
+        int $credits,
+        DateTime $createdAt,
+        ?CreditReception $creditReception = null
+    ) {
+        $this->id = $id;
+        $this->credits = $credits;
+        $this->createdAt = $createdAt;
+        $this->creditReception = $creditReception;
+    }
+
+    /**
      * @return int
      */
     public function getId(): int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCreatedAt(): string
-    {
-        return $this->createdAt;
     }
 
     /**
@@ -67,22 +72,6 @@ class StagedCreditReception
     }
 
     /**
-     * @param string $createdAt
-     */
-    public function setCreatedAt(string $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-    
-    /**
-     * @param string $hash
-     */
-    public function setHash(string $hash): void
-    {
-        $this->hash = $hash;
-    }
-
-    /**
      * @return int
      */
     public function getCredits(): int
@@ -91,11 +80,11 @@ class StagedCreditReception
     }
 
     /**
-     * @param int $credits
+     * @return DateTime
      */
-    public function setCredits(int $credits): void
+    public function getCreatedAt(): DateTime
     {
-        $this->credits = $credits;
+        return $this->createdAt;
     }
 
     /**
@@ -104,13 +93,5 @@ class StagedCreditReception
     public function getCreditReception(): ?CreditReception
     {
         return $this->creditReception;
-    }
-
-    /**
-     * @param CreditReception|null $creditReception
-     */
-    public function setCreditReception(?CreditReception $creditReception): void
-    {
-        $this->creditReception = $creditReception;
     }
 }

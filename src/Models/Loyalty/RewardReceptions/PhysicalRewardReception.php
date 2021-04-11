@@ -16,7 +16,7 @@ class PhysicalRewardReception extends RewardReception
      */
     protected $physicalReward;
 
-    public function __construct($id, string $title, int $credits, Member $member, PhysicalReward $physicalReward)
+    public function __construct(int $id, string $title, int $credits, Member $member, PhysicalReward $physicalReward)
     {
         parent::__construct($id, $title, $credits, $member);
 

@@ -16,7 +16,7 @@ class MemberResponse
     /**
      * @var CreditBalance|null
      */
-    private $creditBalance = null;
+    private $creditBalance;
 
     /**
      * MemberResponse constructor.

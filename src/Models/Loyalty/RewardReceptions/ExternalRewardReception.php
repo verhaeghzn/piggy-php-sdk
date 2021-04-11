@@ -16,7 +16,15 @@ class ExternalRewardReception extends RewardReception
      */
     protected $externalReward;
 
-    public function __construct($id, string $title, int $credits, Member $member, ExternalReward $externalReward)
+    /**
+     * ExternalRewardReception constructor.
+     * @param int $id
+     * @param string $title
+     * @param int $credits
+     * @param Member $member
+     * @param ExternalReward $externalReward
+     */
+    public function __construct(int $id, string $title, int $credits, Member $member, ExternalReward $externalReward)
     {
         parent::__construct($id, $title, $credits, $member);
 
