@@ -2,7 +2,6 @@
 
 namespace Piggy\Api\Resources\OAuth\Giftcards;
 
-use Piggy\Api\Enum\GiftcardType;
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\Giftcards\GiftcardMapper;
 use Piggy\Api\Models\Giftcards\Giftcard;
@@ -29,12 +28,10 @@ class GiftcardsResource extends BaseResource
      */
     public function findOneBy(Shop $shop, string $hash): Giftcard
     {
-        $body = [
+        $response = $this->client->get("{$this->resourceUri}/find-one-by", [
             "shop_id" => $shop->getId(),
             "hash" => $hash,
-        ];
-
-        $response = $this->client->get("{$this->resourceUri}/find-one-by", $body);
+        ]);
 
         $mapper = new GiftcardMapper();
 
@@ -50,13 +47,11 @@ class GiftcardsResource extends BaseResource
      */
     public function create(Shop $shop, GiftcardProgram $giftcardProgram, int $type): Giftcard
     {
-        $body = [
+        $response = $this->client->post($this->resourceUri, [
             "shop_id" => $shop->getId(),
             "giftcard_program_id" => $giftcardProgram->getId(),
             "type" => $type
-        ];
-
-        $response = $this->client->post($this->resourceUri, $body);
+        ]);
 
         $mapper = new GiftcardMapper();
 

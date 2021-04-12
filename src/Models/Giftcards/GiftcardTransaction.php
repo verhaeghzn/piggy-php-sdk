@@ -12,7 +12,7 @@ class GiftcardTransaction
 {
 
     /**
-     * @var int|string
+     * @var int
      */
     protected $id;
 
@@ -26,7 +26,7 @@ class GiftcardTransaction
      */
     protected $created_at;
 
-    public function __construct($id, int $amount, DateTime $created_at)
+    public function __construct(int $id, int $amount, DateTime $created_at)
     {
         $this->id = $id;
         $this->amount = $amount;
@@ -34,9 +34,9 @@ class GiftcardTransaction
     }
 
     /**
-     * @return int|string
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }

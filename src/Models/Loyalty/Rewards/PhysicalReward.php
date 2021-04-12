@@ -13,7 +13,7 @@ class PhysicalReward extends Reward
      */
     protected $active;
 
-    public function __construct($id, string $title, bool $active = true,  ?int $requiredCredits = null)
+    public function __construct(int $id, string $title, bool $active = true,  ?int $requiredCredits = null)
     {
         parent::__construct($id, $title, $requiredCredits);
 

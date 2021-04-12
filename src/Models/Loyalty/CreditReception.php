@@ -33,13 +33,13 @@ class CreditReception
 
     /**
      * CreditReception constructor.
-     * @param $id
+     * @param int $id
      * @param int $credits
      * @param Member $member
      * @param string $createdAt
      * @throws Exception
      */
-    public function __construct($id, int $credits, Member $member, string $createdAt)
+    public function __construct(int $id, int $credits, Member $member, string $createdAt)
     {
         $this->id = $id;
         $this->credits = $credits;

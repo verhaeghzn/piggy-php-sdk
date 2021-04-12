@@ -21,11 +21,11 @@ class Reward
 
     /**
      * Reward constructor.
-     * @param $id
+     * @param int $id
      * @param string $title
      * @param int|null $requiredCredits
      */
-    public function __construct($id, string $title, ?int $requiredCredits = null)
+    public function __construct(int $id, string $title, ?int $requiredCredits = null)
     {
         $this->id = $id;
         $this->title = $title;

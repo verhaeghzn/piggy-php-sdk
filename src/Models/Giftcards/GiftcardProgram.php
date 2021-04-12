@@ -9,7 +9,7 @@ namespace Piggy\Api\Models\Giftcards;
 class GiftcardProgram
 {
     /**
-     * @var int|string
+     * @var int
      */
     protected $id;
 
@@ -20,19 +20,19 @@ class GiftcardProgram
 
     /**
      * GiftcardProgram constructor.
-     * @param $id
+     * @param int $id
      * @param string $name
      */
-    public function __construct($id, string $name)
+    public function __construct(int $id, string $name)
     {
         $this->id = $id;
         $this->name = $name;
     }
 
     /**
-     * @return int|string
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }

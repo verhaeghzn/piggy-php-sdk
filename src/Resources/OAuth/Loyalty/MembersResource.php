@@ -29,12 +29,10 @@ class MembersResource extends BaseResource
      */
     public function create(Shop $shop, string $email): Member
     {
-        $body = [
+        $response = $this->client->post($this->resourceUri, [
             "shop_id" => $shop->getId(),
             "email" => $email,
-        ];
-
-        $response = $this->client->post($this->resourceUri, $body);
+        ]);
 
         $mapper = new MemberMapper();
 
@@ -49,12 +47,10 @@ class MembersResource extends BaseResource
      */
     public function findOneBy(Shop $shop, string $email): MemberResponse
     {
-        $body = [
+        $response = $this->client->get("{$this->resourceUri}/find-one-by", [
             "shop_id" => $shop->getId(),
             "email" => $email,
-        ];
-
-        $response = $this->client->get("{$this->resourceUri}/find-one-by", $body);
+        ]);
 
         $mapper = new MemberAndCreditBalanceResponseMapper();
 

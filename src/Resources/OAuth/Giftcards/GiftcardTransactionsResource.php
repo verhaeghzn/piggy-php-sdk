@@ -29,13 +29,11 @@ class GiftcardTransactionsResource extends BaseResource
      */
     public function create(Shop $shop, Giftcard $giftcard, int $amount): GiftcardTransaction
     {
-        $body = [
+        $response = $this->client->post($this->resourceUri, [
             "shop_id" => $shop->getId(),
             "giftcard_id" => $giftcard->getId(),
             "amount" => $amount
-        ];
-
-        $response = $this->client->post($this->resourceUri, $body);
+        ]);
 
         $mapper = new GiftcardTransactionMapper();
 

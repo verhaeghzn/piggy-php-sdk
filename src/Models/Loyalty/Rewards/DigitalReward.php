@@ -9,7 +9,7 @@ class DigitalReward extends Reward
      */
     protected $meta;
 
-    public function __construct($id, string $title, ?int $requiredCredits = null, array $meta = null)
+    public function __construct(int $id, string $title, ?int $requiredCredits = null, array $meta = null)
     {
         parent::__construct($id, $title, $requiredCredits);
 

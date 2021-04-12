@@ -28,12 +28,10 @@ class LoyaltyCardsResource extends BaseResource
      */
     public function findOneBy(Shop $shop, string $hash): LoyaltyCard
     {
-        $body = [
+        $response = $this->client->get("{$this->resourceUri}/loyalty-cards/find-one-by", [
             "shop_id" => $shop->getId(),
             "hash" => $hash,
-        ];
-
-        $response = $this->client->get("{$this->resourceUri}/loyalty-cards/find-one-by", $body);
+        ]);
 
         $mapper = new LoyaltyCardMapper();
 
