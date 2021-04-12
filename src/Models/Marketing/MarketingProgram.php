@@ -2,8 +2,6 @@
 
 namespace Piggy\Api\Models\Marketing;
 
-use DateTime;
-
 /**
  * Class MarketingProgram
  * @package Piggy\Api\Models\Marketing

@@ -4,6 +4,10 @@ namespace Piggy\Api\Models\Marketing;
 
 use DateTime;
 
+/**
+ * Class MarketingRecipient
+ * @package Piggy\Api\Models\Marketing
+ */
 class MarketingRecipient
 {
     /**
@@ -26,6 +30,13 @@ class MarketingRecipient
      */
     protected $createdAt;
 
+    /**
+     * MarketingRecipient constructor.
+     * @param int $id
+     * @param string $email
+     * @param bool $subscribed
+     * @param DateTime $createdAt
+     */
     public function __construct(int $id, string $email, bool $subscribed, DateTime $createdAt)
     {
         $this->id = $id;

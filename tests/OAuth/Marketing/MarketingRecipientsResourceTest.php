@@ -8,6 +8,10 @@ use Piggy\Api\Models\Marketing\MarketingProgram;
 use Piggy\Api\Models\Marketing\MarketingRecipient;
 use Piggy\Api\Tests\OAuthTestCase;
 
+/**
+ * Class MarketingRecipientsResourceTest
+ * @package Piggy\Api\Tests\OAuth\Marketing
+ */
 class MarketingRecipientsResourceTest extends OAuthTestCase
 {
     /**
