@@ -4,6 +4,7 @@
 namespace Piggy\Api\Mappers;
 
 use DateTime;
+use DateTimeInterface;
 
 /**
  * Class BaseMapper
@@ -17,6 +18,6 @@ abstract class BaseMapper
      */
     public function parseDate(string $date)
     {
-        return DateTime::createFromFormat(DateTime::ATOM, $date);
+        return DateTime::createFromFormat(DateTimeInterface::ATOM, $date);
     }
 }
