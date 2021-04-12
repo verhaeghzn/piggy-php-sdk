@@ -8,6 +8,10 @@ use Piggy\Api\Models\Marketing\MarketingProgram;
 use Piggy\Api\Models\Marketing\MarketingRecipient;
 use Piggy\Api\Resources\BaseResource;
 
+/**
+ * Class MarketingRecipientsResource
+ * @package Piggy\Api\Resources\OAuth\Marketing
+ */
 class MarketingRecipientsResource extends BaseResource
 {
     /**
@@ -21,7 +25,7 @@ class MarketingRecipientsResource extends BaseResource
      * @return MarketingRecipient
      * @throws RequestException
      */
-    public function find(MarketingProgram $marketingProgram, string $email)
+    public function get(MarketingProgram $marketingProgram, string $email): MarketingRecipient
     {
         $response = $this->client->get($this->resourceUri, [
             "marketing_program_id" => $marketingProgram->getId(),
@@ -33,5 +37,36 @@ class MarketingRecipientsResource extends BaseResource
         return $mapper->map($response->getData());
     }
 
+    /**
+     * @param MarketingProgram $marketingProgram
+     * @param string $email
+     * @return MarketingRecipient
+     * @throws RequestException
+     */
+    public function create(MarketingProgram $marketingProgram, string $email): MarketingRecipient
+    {
+        $response = $this->client->post($this->resourceUri, [
+            "marketing_program_id" => $marketingProgram->getId(),
+            "email" => $email,
+        ]);
+
+        $mapper = new MarketingRecipientMapper();
+
+        return $mapper->map($response->getData());
+    }
+
+    /**
+     * @param MarketingRecipient $marketingRecipient
+     * @return MarketingRecipient
+     * @throws RequestException
+     */
+    public function update(MarketingRecipient $marketingRecipient): MarketingRecipient
+    {
+        $response = $this->client->put("{$this->resourceUri}/{$marketingRecipient->getId()}", []);
+
+        $mapper = new MarketingRecipientMapper();
+
+        return $mapper->map($response->getData());
+    }
 
 }

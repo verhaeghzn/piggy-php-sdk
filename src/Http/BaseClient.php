@@ -183,6 +183,17 @@ abstract class BaseClient
 
     /**
      * @param string $url
+     * @param array $body
+     * @return Response
+     * @throws RequestException
+     */
+    public function put(string $url, array $body): Response
+    {
+        return $this->request('PUT', $url, $body);
+    }
+
+    /**
+     * @param string $url
      * @param array $params
      * @return Response
      * @throws RequestException
