@@ -2,12 +2,16 @@
 
 namespace Piggy\Api\Tests;
 
+use DateTime;
+use DateTimeInterface;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\Response;
+use Piggy\Api\Enum\GiftcardType;
 use Piggy\Api\Enum\ShopType;
+use Piggy\Api\Models\Giftcards\Giftcard;
 use Piggy\Api\Models\Loyalty\Member;
 use Piggy\Api\Models\Shops\PhysicalShop;
 use Piggy\Api\Models\Shops\Shop;
@@ -29,6 +33,9 @@ class BaseTestCase extends TestCase
      */
     protected $mockHandler;
 
+    /**
+     *
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -41,6 +48,11 @@ class BaseTestCase extends TestCase
         $this->mockHandler = $mock;
     }
 
+    /**
+     * @param array $data
+     * @param array|null $meta
+     * @param int $code
+     */
     protected function addExpectedResponse(array $data, array $meta = null, int $code = 200)
     {
         $response = new Response($code, [], json_encode([
@@ -49,6 +61,15 @@ class BaseTestCase extends TestCase
         ]));
 
         $this->mockHandler->append($response);
+    }
+
+    /**
+     * @param string $date
+     * @return DateTime|false
+     */
+    public function parseDate(string $date)
+    {
+        return DateTime::createFromFormat(DateTimeInterface::ATOM, $date);
     }
 
     /**
@@ -67,6 +88,9 @@ class BaseTestCase extends TestCase
         return $this->mockHandler;
     }
 
+    /**
+     * @return Member
+     */
     public function createMember(): Member
     {
         $member = new Member(1, "piggy@piggy.nl");
@@ -74,6 +98,10 @@ class BaseTestCase extends TestCase
         return $member;
     }
 
+    /**
+     * @param string $shopType
+     * @return Shop
+     */
     public function createShop($shopType = ShopType::PHYSICAL): Shop
     {
         if ($shopType == ShopType::PHYSICAL) {
