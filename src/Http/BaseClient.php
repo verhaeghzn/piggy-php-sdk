@@ -18,10 +18,14 @@ use Throwable;
  */
 abstract class BaseClient
 {
-    /** @var GuzzleClient */
+    /**
+     * @var ClientInterface
+     */
     private $httpClient;
 
-    /** @var $baseUrl */
+    /**
+     * @var string
+     */
     private $baseUrl = "https://api.piggy.nl";
 
     /**
@@ -45,13 +49,13 @@ abstract class BaseClient
     }
 
     /**
-     * @param $method
-     * @param $endpoint
+     * @param string $method
+     * @param string $endpoint
      * @param array $queryOptions
      * @return Response
      * @throws RequestException
      */
-    public function request($method, $endpoint, $queryOptions = []): Response
+    public function request(string $method, string $endpoint, $queryOptions = []): Response
     {
         if (!array_key_exists('Authorization', $this->headers)) {
             throw new RequestException('Authorization not set yet.');
@@ -98,25 +102,23 @@ abstract class BaseClient
     }
 
     /**
-     * @param $endpoint
+     * @param string $endpoint
      * @param array $queryOptions
      * @return AuthenticationResponse
      * @throws BadResponseException
      * @throws RequestException
      */
-    public function authenticationRequest($endpoint, $queryOptions = []): AuthenticationResponse
+    public function authenticationRequest(string $endpoint, $queryOptions = []): AuthenticationResponse
     {
         $url = $this->baseUrl . $endpoint;
 
-        $options = [
-            "headers" => $this->headers,
-            "form_params" => $queryOptions,
-        ];
-
         try {
-            $rawResponse = $this->httpClient->request("POST", $url, $options);
-            $response = $this->parseAuthenticationResponse($rawResponse);
-            return $response;
+            $rawResponse = $this->httpClient->request("POST", $url, [
+                "headers" => $this->headers,
+                "form_params" => $queryOptions,
+            ]);
+
+            return $this->parseAuthenticationResponse($rawResponse);
         } catch (GuzzleException $e) {
             throw RequestException::createFromGuzzleException($e);
         }

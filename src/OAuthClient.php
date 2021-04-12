@@ -15,19 +15,23 @@ class OAuthClient extends BaseClient
 {
     use OAuthResources;
 
-    /** @var string $clientId */
+    /**
+     * @var int
+     */
     public $clientId;
 
-    /** @var string $clientSecret */
+    /**
+     * @var string
+     */
     public $clientSecret;
 
     /**
      * OAuthClient constructor.
-     * @param $clientId
+     * @param int $clientId
      * @param string $clientSecret
      * @param ClientInterface|null $client
      */
-    public function __construct($clientId, string $clientSecret, ?ClientInterface $client = null)
+    public function __construct(int $clientId, string $clientSecret, ?ClientInterface $client = null)
     {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
@@ -39,12 +43,11 @@ class OAuthClient extends BaseClient
 
     /**
      * @return Http\Responses\Response
-     * @throws Exceptions\BadResponseException
      * @throws RequestException
      */
     public function ping()
     {
-        $response = $this->get("/api/v2/oauth/clients", []);
+        $response = $this->get("/api/v2/oauth/clients");
 
         return $response;
     }
@@ -56,22 +59,20 @@ class OAuthClient extends BaseClient
      */
     public function getAccessToken(): string
     {
-        $body = [
+        $response = $this->authenticationRequest("/oauth/token", [
             "grant_type" => "client_credentials",
             "client_id" => $this->clientId,
             "client_secret" => $this->clientSecret
-        ];
-
-        $response = $this->authenticationRequest("/oauth/token", $body);
+        ]);
 
         return $response->getAccessToken();
     }
 
     /**
-     * @param $accessToken
-     * @return OAuthClient
+     * @param string $accessToken
+     * @return $this
      */
-    public function setAccessToken($accessToken): self
+    public function setAccessToken(string $accessToken): self
     {
         $this->addHeader("Authorization", "Bearer {$accessToken}");
         return $this;
