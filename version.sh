@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=$(git describe --abbrev=0 --tags | sed 's/* //'  );
+version=$(git tag | sort -V | tail -1);
 argument="$@"
 old_version=""
 
@@ -34,6 +34,8 @@ then
   ((a[2]++))
 fi
 new_version="${a[0]}.${a[1]}.${a[2]}"
+
+echo New version of type "$argument": $new_version;
 
 git tag $new_version;
 git push origin $new_version;
