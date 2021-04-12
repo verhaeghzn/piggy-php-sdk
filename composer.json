@@ -27,6 +27,9 @@
     "phpstan/phpstan": "^0.12.83"
   },
   "require-dev": {
-    "phpunit/phpunit": "~5.0"
+    "phpunit/phpunit": "^5.7 || ^6.5 || ^7.1 || ^8.5"
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit tests"
   }
 }
