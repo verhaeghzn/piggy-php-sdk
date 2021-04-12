@@ -1,0 +1,35 @@
+<?php
+
+namespace Piggy\Api\Tests\OAuth\Marketing;
+
+use DateTimeInterface;
+use Piggy\Api\Exceptions\RequestException;
+use Piggy\Api\Models\Marketing\MarketingProgram;
+use Piggy\Api\Models\Marketing\MarketingRecipient;
+use Piggy\Api\Tests\OAuthTestCase;
+
+class MarketingRecipientsResourceTest extends OAuthTestCase
+{
+    /**
+     * @test
+     * @throws RequestException
+     */
+    public function it_returns_a_marketing_recipient_by_email()
+    {
+        $marketingProgram = new MarketingProgram(1, "test program");
+        $marketingRecipient = new MarketingRecipient(1, "test@piggy.nl", true,$this->parseDate("2021-03-07T12:14:16+00:00"));
+
+        $this->addExpectedResponse([
+            "id" => $marketingRecipient->getId(),
+            "email" => $marketingRecipient->getEmail(),
+            "is_subscribed" => $marketingRecipient->isSubscribed(),
+            "created_at" => $marketingRecipient->getCreatedAt()->format(DateTimeInterface::ATOM)
+        ]);
+
+        $data = $this->mockedClient->marketingRecipients->find($marketingProgram, "test@piggy.nl");
+
+        $this->assertEquals($data->getId(), $marketingRecipient->getId());
+        $this->assertEquals($data->getEmail(), $marketingRecipient->getEmail());
+        $this->assertEquals($data->getCreatedAt(), $marketingRecipient->getCreatedAt());
+    }
+}

@@ -13,6 +13,7 @@ use Piggy\Api\Resources\OAuth\Loyalty\Rewards\ExternalRewardReceptionsResource;
 use Piggy\Api\Resources\OAuth\Loyalty\Rewards\PhysicalRewardReceptionsResource;
 use Piggy\Api\Resources\OAuth\Loyalty\Rewards\RewardsResource;
 use Piggy\Api\Resources\OAuth\Loyalty\StagedCreditReceptionsResource;
+use Piggy\Api\Resources\OAuth\Marketing\MarketingRecipientsResource;
 use Piggy\Api\Resources\OAuth\Shops\WebshopsResource;
 
 /**
@@ -77,6 +78,11 @@ trait SetsOAuthResources
     public $giftcardTransactions;
 
     /**
+     * @var MarketingRecipientsResource
+     */
+    public $marketingRecipients;
+
+    /**
      * @param BaseClient $client
      */
     protected function setResources(BaseClient $client)
@@ -92,5 +98,6 @@ trait SetsOAuthResources
         $this->physicalRewardReceptions = new PhysicalRewardReceptionsResource($client);
         $this->giftcards = new GiftcardsResource($client);
         $this->giftcardTransactions = new GiftcardTransactionsResource($client);
+        $this->marketingRecipients = new MarketingRecipientsResource($client);
     }
 }
