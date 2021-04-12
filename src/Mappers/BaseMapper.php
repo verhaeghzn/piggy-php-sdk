@@ -17,6 +17,6 @@ abstract class BaseMapper
      */
     public function parseDate(string $date)
     {
-        return DateTime::createFromFormat(DateTime::ISO8601, $date);
+        return DateTime::createFromFormat(DateTime::ATOM, $date);
     }
 }
