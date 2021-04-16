@@ -12,16 +12,16 @@ use stdClass;
 class OAuthTokenMapper
 {
     /**
-     * @param stdClass $data
+     * @param object $data
      * @return OAuthToken
      */
-    public function map(stdClass $data): OAuthToken
+    public function map(object $data): OAuthToken
     {
         $token = new OAuthToken();
 
-        $token->setAccessToken($data->access_token);
-        $token->setRefreshToken($data->refresh_token);
-        $token->setExpiresIn($data->expires_in);
+        $token->setAccessToken($data->getAccessToken());
+        $token->setRefreshToken($data->getRefreshToken());
+        $token->setExpiresIn($data->getExpiresIn());
 
         return $token;
     }

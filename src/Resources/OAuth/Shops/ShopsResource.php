@@ -3,7 +3,9 @@
 namespace Piggy\Api\Resources\OAuth\Shops;
 
 use Piggy\Api\Exceptions\RequestException;
+use Piggy\Api\Mappers\Shops\ShopMapper;
 use Piggy\Api\Mappers\Shops\ShopsMapper;
+use Piggy\Api\Models\Shops\Shop;
 use Piggy\Api\Resources\BaseResource;
 
 /**
@@ -32,14 +34,14 @@ class ShopsResource extends BaseResource
 
     /**
      * @param int $id
-     * @return array
+     * @return Shop
      * @throws RequestException
      */
-    public function get(int $id): array
+    public function get(int $id): Shop
     {
         $response = $this->client->get("{$this->resourceUri}/{$id}", []);
 
-        $mapper = new ShopsMapper();
+        $mapper = new ShopMapper();
 
         return $mapper->map($response->getData());
     }

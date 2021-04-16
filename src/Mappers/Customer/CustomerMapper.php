@@ -16,10 +16,8 @@ class CustomerMapper
      */
     public function map(object $data): Customer
     {
-        $customer = new Customer();
+        $customer = new Customer($data->id, $data->email);
 
-        $customer->setId($data->id);
-        $customer->setEmail($data->email);
         $customer->setFirstName($data->first_name ?? null);
         $customer->setLastName($data->last_name ?? null);
 

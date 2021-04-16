@@ -4,6 +4,7 @@ namespace Piggy\Api;
 
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Http\BaseClient;
+use Piggy\Api\Http\Responses\AuthenticationResponse;
 use Piggy\Api\Http\Traits\SetsCustomerResources as CustomerResources;
 use Piggy\Api\Mappers\OAuthTokenMapper;
 use Piggy\Api\Models\OAuthToken;
@@ -42,6 +43,7 @@ class CustomerClient extends BaseClient
     /**
      * @param string $code
      * @return OAuthToken
+     * @throws Exceptions\BadResponseException
      * @throws RequestException
      */
     public function getOAuthToken(string $code): OAuthToken
@@ -54,11 +56,11 @@ class CustomerClient extends BaseClient
             "redirect_uri" => $this->redirectUri
         ];
 
-        $data = $this->post("/oauth/token", $body);
+        $data = $this->authenticationRequest("/oauth/token", $body);
 
         $mapper = new OAuthTokenMapper();
 
-        return $mapper->map($data->getData());
+        return $mapper->map($data);
     }
 
     /**

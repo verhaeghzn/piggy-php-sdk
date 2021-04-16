@@ -22,7 +22,6 @@ class ProfileResource extends BaseResource
     /**
      * @return Customer
      * @throws RequestException
-     * @throws Exception
      */
     public function show(): Customer
     {

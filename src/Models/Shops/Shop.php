@@ -2,6 +2,8 @@
 
 namespace Piggy\Api\Models\Shops;
 
+use Piggy\Api\Models\Loyalty\LoyaltyProgram;
+
 /**
  * Class Shop
  * @package Piggy\Api\Models\Shops
@@ -19,14 +21,20 @@ abstract class Shop
     protected $name;
 
     /**
+     * @var LoyaltyProgram|null $loyaltyProgram
+     */
+    protected $loyaltyProgram;
+
+    /**
      * Shop constructor.
      * @param int $id
      * @param string $name
      */
-    public function __construct(int $id, string $name)
+    public function __construct(int $id, string $name, LoyaltyProgram $loyaltyProgram = null)
     {
         $this->id = $id;
         $this->name = $name;
+        $this->loyaltyProgram = $loyaltyProgram;
     }
 
     /**
@@ -43,5 +51,13 @@ abstract class Shop
     public function getName(): string
     {
         return $this->name;
+    }
+    
+    /**
+     * @return LoyaltyProgram|null
+     */
+    public function getLoyaltyProgram(): ?LoyaltyProgram
+    {
+        return $this->loyaltyProgram;
     }
 }

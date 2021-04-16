@@ -24,6 +24,11 @@ class AuthenticationResponse
     private $accessToken;
 
     /**
+     * @var string
+     */
+    private $refreshToken;
+
+    /**
      * AuthenticationResponse constructor.
      * @param object $data
      */
@@ -32,8 +37,16 @@ class AuthenticationResponse
         $this->tokenType = $data->token_type;
         $this->expiresIn = $data->expires_in;
         $this->accessToken = $data->access_token;
+        $this->refreshToken = $data->refresh_token;
     }
 
+    /**
+     * @return string
+     */
+    public function getRefreshToken(): string
+    {
+        return $this->refreshToken;
+    }
 
     /**
      * @return string

@@ -29,6 +29,12 @@ class Customer
      */
     protected $lastName;
 
+    public function __construct($id, $email)
+    {
+        $this->id = $id;
+        $this->email = $email;
+    }
+
     /**
      * @return int
      */

@@ -12,6 +12,7 @@ use GuzzleHttp\Psr7\Response;
 use Piggy\Api\Enum\GiftcardType;
 use Piggy\Api\Enum\ShopType;
 use Piggy\Api\Models\Giftcards\Giftcard;
+use Piggy\Api\Models\Loyalty\LoyaltyProgram;
 use Piggy\Api\Models\Loyalty\Member;
 use Piggy\Api\Models\Shops\PhysicalShop;
 use Piggy\Api\Models\Shops\Shop;
@@ -111,5 +112,15 @@ class BaseTestCase extends TestCase
         }
 
         return $shop;
+    }
+
+    /**
+     * @return LoyaltyProgram
+     */
+    public function createLoyaltyProgram(): LoyaltyProgram
+    {
+        $loyaltyProgram = new LoyaltyProgram(1, "Loyalty program name");
+
+        return $loyaltyProgram;
     }
 }
