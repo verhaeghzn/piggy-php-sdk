@@ -35,10 +35,10 @@ class StagedCreditReceptionsResource extends BaseResource
     }
 
     /**
-     * @param Shop $shop
-     * @param float $purchaseAmount
-     * @param int|null $credits
-     * @return StagedCreditReception
+     * @param \Piggy\Api\Models\Shops\Shop $shop
+     * @param int $credits
+     * @param float|null $purchaseAmount
+     * @return \Piggy\Api\Models\Loyalty\StagedCreditReception
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
@@ -56,17 +56,17 @@ class StagedCreditReceptionsResource extends BaseResource
     }
 
     /**
-     * @param string $hash
+     * @param StagedCreditReception $stagedCreditReception
      * @param string $email
      * @param null $locale
      * @return StagedCreditReception
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
-    public function send(string $hash, string $email, $locale = null): StagedCreditReception
+    public function send(StagedCreditReception $stagedCreditReception, string $email, $locale = null): StagedCreditReception
     {
         $response = $this->client->post("{$this->resourceUri}/send", [
-            "hash" => $hash,
+            "id" => $stagedCreditReception->getId(),
             "email" => $email,
             "locale" => $locale
         ]);
