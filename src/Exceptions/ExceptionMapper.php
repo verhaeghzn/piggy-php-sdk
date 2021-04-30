@@ -20,11 +20,13 @@ class ExceptionMapper
     public function map(GuzzleException $guzzleException)
     {
         if (method_exists($guzzleException, 'hasResponse') && method_exists($guzzleException, 'getResponse')) {
-            $body = $guzzleException->getResponse()->getBody();
-            $body = @json_decode($body);
+            if(property_exists($guzzleException->getResponse(), 'getBody')) {
+                $body = $guzzleException->getResponse()->getBody();
+                $body = @json_decode($body);
 
-            if ($this->isPiggyException($body)) {
-                throw $this->mapPiggyException($body, $guzzleException);
+                if ($this->isPiggyException($body)) {
+                    throw $this->mapPiggyException($body, $guzzleException);
+                }
             }
         }
 
