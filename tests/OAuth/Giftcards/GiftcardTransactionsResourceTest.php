@@ -3,8 +3,9 @@
 namespace Piggy\Api\Tests\OAuth\Giftcards;
 
 use DateTimeInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use Piggy\Api\Enum\GiftcardType;
-use Piggy\Api\Exceptions\RequestException;
+use Piggy\Api\Exceptions\PiggyRequestException;
 use Piggy\Api\Models\Giftcards\Giftcard;
 use Piggy\Api\Models\Giftcards\GiftcardProgram;
 use Piggy\Api\Models\Giftcards\GiftcardTransaction;
@@ -18,7 +19,8 @@ class GiftcardTransactionsResourceTest extends OAuthTestCase
 {
     /**
      * @test
-     * @throws RequestException
+     * @throws GuzzleException
+     * @throws PiggyRequestException
      */
     public function it_returns_giftcard_transaction_after_creation()
     {
@@ -33,7 +35,7 @@ class GiftcardTransactionsResourceTest extends OAuthTestCase
             "created_at" => $giftcardTransaction->getCreatedAt()->format(DateTimeInterface::ATOM),
         ]);
 
-        $data = $this->mockedClient->giftcardTransactions->create($shop, $giftcard,100);
+        $data = $this->mockedClient->giftcardTransactions->create($shop, $giftcard, 100);
 
         $this->assertEquals($data->getId(), $giftcardTransaction->getId());
         $this->assertEquals($data->getAmount(), $giftcardTransaction->getAmount());

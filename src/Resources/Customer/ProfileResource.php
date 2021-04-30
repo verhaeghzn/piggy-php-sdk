@@ -2,8 +2,6 @@
 
 namespace Piggy\Api\Resources\Customer;
 
-use Exception;
-use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\Customer\CustomerMapper;
 use Piggy\Api\Models\Customer\Customer;
 use Piggy\Api\Resources\BaseResource;
@@ -21,7 +19,8 @@ class ProfileResource extends BaseResource
 
     /**
      * @return Customer
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function show(): Customer
     {

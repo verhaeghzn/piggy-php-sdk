@@ -2,7 +2,6 @@
 
 namespace Piggy\Api\Mappers\Loyalty;
 
-use DateTime;
 use Exception;
 use Piggy\Api\Mappers\BaseMapper;
 use Piggy\Api\Models\Loyalty\StagedCreditReception;
@@ -22,14 +21,14 @@ class StagedCreditReceptionMapper extends BaseMapper
     {
         $creditReceptionMapper = new CreditReceptionMapper();
 
-        $creditReception = null;
-
-        if ($data->credit_reception) {
+        if (property_exists($data, "credit_reception")) {
             $creditReception = $creditReceptionMapper->map($data->credit_reception);
+        } else {
+            $creditReception = null;
         }
 
         $stagedCreditReception = new StagedCreditReception(
-            1,
+            $data->id,
             $data->credits,
             $this->parseDate($data->created_at),
             $creditReception

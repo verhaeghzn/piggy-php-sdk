@@ -26,7 +26,8 @@ class PhysicalRewardReceptionsResource extends BaseResource
      * @param Reward $reward
      * @param LoyaltyCard $loyaltyCard
      * @return PhysicalRewardReception
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function create(Shop $shop, Reward $reward, LoyaltyCard $loyaltyCard): PhysicalRewardReception
     {

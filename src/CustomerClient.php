@@ -43,7 +43,7 @@ class CustomerClient extends BaseClient
     /**
      * @param string $code
      * @return OAuthToken
-     * @throws Exceptions\BadResponseException
+     * @throws Exceptions\MalformedResponseException
      * @throws RequestException
      */
     public function getOAuthToken(string $code): OAuthToken

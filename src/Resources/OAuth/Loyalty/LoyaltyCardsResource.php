@@ -24,7 +24,8 @@ class LoyaltyCardsResource extends BaseResource
      * @param Shop $shop
      * @param string $hash
      * @return LoyaltyCard
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function findOneBy(Shop $shop, string $hash): LoyaltyCard
     {
@@ -43,7 +44,8 @@ class LoyaltyCardsResource extends BaseResource
      * @param Member $member
      * @param LoyaltyCard $loyaltyCard
      * @return LoyaltyCard
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function link(Shop $shop, Member $member, LoyaltyCard $loyaltyCard): LoyaltyCard
     {

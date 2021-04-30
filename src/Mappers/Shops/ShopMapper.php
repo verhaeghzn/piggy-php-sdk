@@ -4,7 +4,6 @@ namespace Piggy\Api\Mappers\Shops;
 
 use Exception;
 use Piggy\Api\Enum\ShopType;
-use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Models\Shops\PhysicalShop;
 use Piggy\Api\Models\Shops\Webshop;
 
@@ -16,8 +15,8 @@ class ShopMapper
 {
     /**
      * @param object $data
-     * @return PhysicalShop
-     * @throws RequestException
+     * @return PhysicalShop|Webshop
+     * @throws Exception
      */
     public function map(object $data)
     {
@@ -31,11 +30,11 @@ class ShopMapper
         }
 
         if ($data->type == ShopType::WEB) {
-            $shops[] = $webShopMapper->map($data);
+            $shop = $webShopMapper->map($data);
         }
 
         if ($shop === null) {
-            throw new RequestException("Shop could not be mapped. No shop type given");
+            throw new Exception("Shop could not be mapped. No shop type given");
         }
 
         return $shop;

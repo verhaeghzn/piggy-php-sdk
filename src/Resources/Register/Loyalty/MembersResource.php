@@ -23,7 +23,8 @@ class MembersResource extends BaseResource
     /**
      * @param string $email
      * @return Member
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function create(string $email): Member
     {
@@ -39,7 +40,8 @@ class MembersResource extends BaseResource
     /**
      * @param string $email
      * @return MemberResponse
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function findOneBy(string $email): MemberResponse
     {

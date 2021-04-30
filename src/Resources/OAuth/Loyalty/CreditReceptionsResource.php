@@ -24,7 +24,8 @@ class CreditReceptionsResource extends BaseResource
     /**
      * @param int $id
      * @return CreditReception
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function get(int $id): CreditReception
     {
@@ -41,7 +42,8 @@ class CreditReceptionsResource extends BaseResource
      * @param int $purchaseAmount
      * @param LoyaltyCard|null $loyaltyCard
      * @return CreditReception
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function create(
         Shop $shop,

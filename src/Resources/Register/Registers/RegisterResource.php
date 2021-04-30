@@ -20,7 +20,8 @@ class RegisterResource extends BaseResource
 
     /**
      * @return Register
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function get(): Register
     {

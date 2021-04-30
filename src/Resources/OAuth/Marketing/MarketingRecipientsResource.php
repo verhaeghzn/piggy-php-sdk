@@ -23,7 +23,8 @@ class MarketingRecipientsResource extends BaseResource
      * @param MarketingProgram $marketingProgram
      * @param string $email
      * @return MarketingRecipient
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function get(MarketingProgram $marketingProgram, string $email): MarketingRecipient
     {

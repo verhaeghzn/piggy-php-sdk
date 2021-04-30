@@ -21,7 +21,8 @@ class WebshopsResource extends BaseResource
 
     /**
      * @return array
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function all(): array
     {
@@ -35,7 +36,8 @@ class WebshopsResource extends BaseResource
     /**
      * @param int $id
      * @return Webshop
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function get(int $id): Webshop
     {

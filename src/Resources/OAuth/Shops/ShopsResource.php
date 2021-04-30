@@ -21,7 +21,8 @@ class ShopsResource extends BaseResource
 
     /**
      * @return array
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function all(): array
     {

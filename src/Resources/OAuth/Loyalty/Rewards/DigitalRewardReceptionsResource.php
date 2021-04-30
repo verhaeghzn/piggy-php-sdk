@@ -26,7 +26,8 @@ class DigitalRewardReceptionsResource extends BaseResource
      * @param Reward $reward
      * @param LoyaltyCard $loyaltyCard
      * @return DigitalRewardReception
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function create(Shop $shop, Reward $reward, LoyaltyCard $loyaltyCard): DigitalRewardReception
     {

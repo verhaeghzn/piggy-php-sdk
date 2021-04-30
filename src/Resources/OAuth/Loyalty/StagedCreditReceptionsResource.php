@@ -22,7 +22,8 @@ class StagedCreditReceptionsResource extends BaseResource
     /**
      * @param int $id
      * @return StagedCreditReception
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function get(int $id): StagedCreditReception
     {
@@ -38,9 +39,10 @@ class StagedCreditReceptionsResource extends BaseResource
      * @param float $purchaseAmount
      * @param int|null $credits
      * @return StagedCreditReception
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
-    public function create(Shop $shop, float $purchaseAmount, int $credits = null): StagedCreditReception
+    public function create(Shop $shop, int $credits, float $purchaseAmount = null): StagedCreditReception
     {
         $response = $this->client->post($this->resourceUri, [
             "shop_id" => $shop->getId(),
@@ -58,7 +60,8 @@ class StagedCreditReceptionsResource extends BaseResource
      * @param string $email
      * @param null $locale
      * @return StagedCreditReception
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function send(string $hash, string $email, $locale = null): StagedCreditReception
     {

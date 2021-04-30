@@ -21,7 +21,8 @@ class RewardsResource extends BaseResource
     /**
      * @param Shop $shop
      * @return array
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function all(Shop $shop): array
     {

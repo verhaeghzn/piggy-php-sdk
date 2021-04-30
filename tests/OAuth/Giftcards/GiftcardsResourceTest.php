@@ -3,9 +3,11 @@
 namespace Piggy\Api\Tests\OAuth\Giftcards;
 
 use Piggy\Api\Enum\GiftcardType;
+use Piggy\Api\Exceptions\PiggyRequestException;
 use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Models\Giftcards\Giftcard;
 use Piggy\Api\Models\Giftcards\GiftcardProgram;
+use Piggy\Api\OAuthClient;
 use Piggy\Api\Tests\OAuthTestCase;
 
 /**
@@ -71,7 +73,7 @@ class GiftcardsResourceTest extends OAuthTestCase
             ]
         ]);
 
-        $data = $this->mockedClient->giftcards->create($shop, $giftcardProgram,GiftcardType::DIGITAL);
+        $data = $this->mockedClient->giftcards->create($shop, $giftcardProgram, GiftcardType::DIGITAL);
 
         $this->assertEquals($data->getId(), $giftcard->getId());
         $this->assertEquals($data->getHash(), $giftcard->getHash());
