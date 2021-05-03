@@ -21,7 +21,7 @@ class StagedCreditReceptionMapper extends BaseMapper
     {
         $creditReceptionMapper = new CreditReceptionMapper();
 
-        if (property_exists($data, "credit_reception")) {
+        if (isset($data->credit_reception)) {
             $creditReception = $creditReceptionMapper->map($data->credit_reception);
         } else {
             $creditReception = null;
@@ -29,8 +29,10 @@ class StagedCreditReceptionMapper extends BaseMapper
 
         $stagedCreditReception = new StagedCreditReception(
             $data->id,
+            $data->url,
+            $data->hash,
             $data->credits,
-            $this->parseDate($data->created_at),
+            $data->created_at,
             $creditReception
         );
 

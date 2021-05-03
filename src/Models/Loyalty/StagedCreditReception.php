@@ -27,6 +27,11 @@ class StagedCreditReception
     protected $credits;
 
     /**
+     * @var string
+     */
+    protected $url;
+
+    /**
      * @var DateTime
      */
     protected $createdAt;
@@ -39,17 +44,22 @@ class StagedCreditReception
     /**
      * StagedCreditReception constructor.
      * @param int $id
+     * @param string $url
      * @param int $credits
+     * @param string $createdAt
      * @param CreditReception|null $creditReception
-     * @param DateTime $createdAt
      */
     public function __construct(
         int $id,
+        string $url,
+        string $hash,
         int $credits,
-        DateTime $createdAt,
+        string $createdAt,
         ?CreditReception $creditReception = null
     ) {
         $this->id = $id;
+        $this->url = $url;
+        $this->hash = $hash;
         $this->credits = $credits;
         $this->createdAt = $createdAt;
         $this->creditReception = $creditReception;
@@ -93,5 +103,13 @@ class StagedCreditReception
     public function getCreditReception(): ?CreditReception
     {
         return $this->creditReception;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->url;
     }
 }

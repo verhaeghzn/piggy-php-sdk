@@ -21,30 +21,37 @@ class CreditReception
      */
     protected $credits;
 
+    /**
+     * @var int|null
+     */
+    protected $purchaseAmount;
+
+    /**
+     * @var Member|null
+     */
+    protected $member;
+
     /**s
      * @var DateTime
      */
     protected $createdAt;
 
     /**
-     * @var Member
-     */
-    protected $member;
-
-    /**
      * CreditReception constructor.
      * @param int $id
      * @param int $credits
-     * @param Member $member
      * @param string $createdAt
+     * @param int|null $purchaseAmount
+     * @param Member|null $member
      * @throws Exception
      */
-    public function __construct(int $id, int $credits, Member $member, string $createdAt)
+    public function __construct(int $id, int $credits, string $createdAt,  int $purchaseAmount = null, Member $member = null)
     {
         $this->id = $id;
         $this->credits = $credits;
-        $this->member = $member;
         $this->createdAt = new DateTime($createdAt);
+        $this->purchaseAmount = $purchaseAmount;
+        $this->member = $member;
     }
 
     /**
@@ -72,10 +79,10 @@ class CreditReception
     }
 
     /**
-     * @return Member
+     * @return int|null
      */
-    public function getMember(): Member
+    public function getPurchaseAmount(): ?int
     {
-        return $this->member;
+        return $this->purchaseAmount;
     }
 }

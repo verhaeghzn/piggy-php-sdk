@@ -46,8 +46,8 @@ class StagedCreditReceptionsResource extends BaseResource
     {
         $response = $this->client->post($this->resourceUri, [
             "shop_id" => $shop->getId(),
-            "purchase_amount" => $purchaseAmount,
             "credits" => $credits,
+            "purchase_amount" => $purchaseAmount,
         ]);
 
         $mapper = new StagedCreditReceptionMapper();

@@ -16,6 +16,29 @@ use Piggy\Api\Tests\OAuthTestCase;
  */
 class GiftcardsResourceTest extends OAuthTestCase
 {
+
+//    /**
+//     * @test
+//     */
+//    public function check_exception()
+//    {
+//        $client = new OAuthClient("211", "bRwQz6duhtxdwUkdgtnk8aMANI8JqLVs9u8ofSn0");
+//        $token = $client->getAccessToken();
+//        $client->setAccessToken($token);
+//        $shop = $client->webshops->get(8466);
+//
+//        $member = $client->members->findOneBy($shop, 'mike@piggy.nl');
+//        $card = $client->loyaltyCards->findOneBy($shop, '20130143197');
+//
+////        $cr = $client->creditReceptions->create($shop, $member->getMember(), $card, null, 1);
+////        $cr2 = $client->creditReceptions->get($cr->getId());
+////        var_dump($cr2);
+////        $stagedCr = $client->stagedCreditReceptions->create($shop, 10, 100);
+////        $stagedCr2 = $client->stagedCreditReceptions->get($stagedCr->getId());
+////        var_dump($stagedCr2);
+////        die();
+//    }
+
     /**
      * @test
      * @throws RequestException

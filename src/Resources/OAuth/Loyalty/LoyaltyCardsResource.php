@@ -18,7 +18,7 @@ class LoyaltyCardsResource extends BaseResource
     /**
      * @var string
      */
-    protected $resourceUri = "/api/v2/oauth/clients/";
+    protected $resourceUri = "/api/v2/oauth/clients";
 
     /**
      * @param Shop $shop

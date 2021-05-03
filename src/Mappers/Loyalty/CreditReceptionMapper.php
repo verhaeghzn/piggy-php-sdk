@@ -18,14 +18,19 @@ class CreditReceptionMapper
      */
     public function map($data): CreditReception
     {
-        $memberMapper = new MemberMapper();
-        $member = $memberMapper->map($data->member);
+        if(isset($data->member)) {
+            $mapper = new MemberMapper();
+            $member = $mapper->map($data->member);
+        } else {
+            $member = null;
+        }
 
         $creditReception = new CreditReception(
             $data->id,
             $data->credits,
-            $member,
-            $data->created_at
+            $data->created_at,
+            $data->purchase_amount ?? null,
+            $member
         );
 
         return $creditReception;
