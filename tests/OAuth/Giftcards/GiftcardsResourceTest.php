@@ -16,7 +16,7 @@ use Piggy\Api\Tests\OAuthTestCase;
  */
 class GiftcardsResourceTest extends OAuthTestCase
 {
-
+//
 //    /**
 //     * @test
 //     */
@@ -33,10 +33,11 @@ class GiftcardsResourceTest extends OAuthTestCase
 ////        $cr = $client->creditReceptions->create($shop, $member->getMember(), $card, null, 1);
 ////        $cr2 = $client->creditReceptions->get($cr->getId());
 ////        var_dump($cr2);
-////        $stagedCr = $client->stagedCreditReceptions->create($shop, 10, 100);
-////        $stagedCr2 = $client->stagedCreditReceptions->get($stagedCr->getId());
-////        var_dump($stagedCr2);
-////        die();
+//        $stagedCr = $client->stagedCreditReceptions->create($shop, 10, 100);
+//        $stagedCr2 = $client->stagedCreditReceptions->get($stagedCr->getId());
+//        $send = $client->stagedCreditReceptions->send($stagedCr, 'mike@piggy.nl');
+//        var_dump($se);
+//        die();
 //    }
 
     /**

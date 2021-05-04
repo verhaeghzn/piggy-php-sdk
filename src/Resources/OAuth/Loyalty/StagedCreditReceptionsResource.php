@@ -59,19 +59,17 @@ class StagedCreditReceptionsResource extends BaseResource
      * @param StagedCreditReception $stagedCreditReception
      * @param string $email
      * @param null $locale
-     * @return StagedCreditReception
+     * @return \stdClass
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
-    public function send(StagedCreditReception $stagedCreditReception, string $email, $locale = null): StagedCreditReception
+    public function send(StagedCreditReception $stagedCreditReception, string $email, $locale = null)
     {
         $response = $this->client->post("{$this->resourceUri}/{$stagedCreditReception->getId()}/send", [
             "email" => $email,
             "locale" => $locale
         ]);
 
-        $mapper = new StagedCreditReceptionMapper();
-
-        return $mapper->map($response->getData());
+        return $response->getData();
     }
 }
