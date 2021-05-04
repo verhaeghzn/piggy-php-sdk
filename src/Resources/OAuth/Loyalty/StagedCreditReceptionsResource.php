@@ -65,7 +65,7 @@ class StagedCreditReceptionsResource extends BaseResource
      */
     public function send(StagedCreditReception $stagedCreditReception, string $email, $locale = null): StagedCreditReception
     {
-        $response = $this->client->post("{$this->resourceUri}/{$stagedCreditReception->getId()}send", [
+        $response = $this->client->post("{$this->resourceUri}/{$stagedCreditReception->getId()}/send", [
             "email" => $email,
             "locale" => $locale
         ]);
