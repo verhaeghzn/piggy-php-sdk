@@ -2,7 +2,6 @@
 
 namespace Piggy\Api\Resources\Register\Registers;
 
-use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\Registers\RegisterMapper;
 use Piggy\Api\Models\Registers\Register;
 use Piggy\Api\Resources\BaseResource;

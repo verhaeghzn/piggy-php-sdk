@@ -2,7 +2,6 @@
 
 namespace Piggy\Api\Resources\Register\Loyalty;
 
-use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\Loyalty\MemberAndCreditBalanceResponseMapper;
 use Piggy\Api\Mappers\Loyalty\MemberMapper;
 use Piggy\Api\Models\Loyalty\Member;
@@ -22,6 +21,7 @@ class MembersResource extends BaseResource
 
     /**
      * @param string $email
+     *
      * @return Member
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Piggy\Api\Exceptions\PiggyRequestException
@@ -39,6 +39,7 @@ class MembersResource extends BaseResource
 
     /**
      * @param string $email
+     *
      * @return MemberResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Piggy\Api\Exceptions\PiggyRequestException
@@ -56,8 +57,10 @@ class MembersResource extends BaseResource
 
     /**
      * @param int $id
+     *
      * @return MemberResponse
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function get(int $id): MemberResponse
     {

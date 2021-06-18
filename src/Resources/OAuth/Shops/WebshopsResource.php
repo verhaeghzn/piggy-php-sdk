@@ -2,7 +2,6 @@
 
 namespace Piggy\Api\Resources\OAuth\Shops;
 
-use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\Shops\WebshopMapper;
 use Piggy\Api\Mappers\Shops\WebshopsMapper;
 use Piggy\Api\Models\Shops\Webshop;
@@ -35,6 +34,7 @@ class WebshopsResource extends BaseResource
 
     /**
      * @param int $id
+     *
      * @return Webshop
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Piggy\Api\Exceptions\PiggyRequestException

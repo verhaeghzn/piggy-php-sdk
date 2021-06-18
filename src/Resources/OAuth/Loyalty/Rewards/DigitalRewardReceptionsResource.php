@@ -2,12 +2,8 @@
 
 namespace Piggy\Api\Resources\OAuth\Loyalty\Rewards;
 
-use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\Loyalty\RewardReceptions\DigitalRewardReceptionMapper;
-use Piggy\Api\Models\Loyalty\LoyaltyCard;
 use Piggy\Api\Models\Loyalty\RewardReceptions\DigitalRewardReception;
-use Piggy\Api\Models\Loyalty\Rewards\Reward;
-use Piggy\Api\Models\Shops\Shop;
 use Piggy\Api\Resources\BaseResource;
 
 /**
@@ -22,19 +18,20 @@ class DigitalRewardReceptionsResource extends BaseResource
     protected $resourceUri = "/api/v2/oauth/clients/rewards/digital";
 
     /**
-     * @param Shop $shop
-     * @param Reward $reward
-     * @param LoyaltyCard $loyaltyCard
+     * @param int $shopId
+     * @param int $digitalRewardId
+     * @param int $loyaltyCardId
+     *
      * @return DigitalRewardReception
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
-    public function create(Shop $shop, Reward $reward, LoyaltyCard $loyaltyCard): DigitalRewardReception
+    public function create(int $shopId, int $digitalRewardId, int $loyaltyCardId): DigitalRewardReception
     {
         $response = $this->client->post("{$this->resourceUri}/reward-reception", [
-            "shop_id" => $shop->getId(),
-            "reward_id" => $reward->getId(),
-            "loyalty_card_id" => $loyaltyCard->getId()
+            "shop_id" => $shopId,
+            "reward_id" => $digitalRewardId,
+            "loyalty_card_id" => $loyaltyCardId,
         ]);
 
         $mapper = new DigitalRewardReceptionMapper();

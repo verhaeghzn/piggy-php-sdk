@@ -2,9 +2,7 @@
 
 namespace Piggy\Api\Resources\OAuth\Marketing;
 
-use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\Marketing\MarketingRecipientMapper;
-use Piggy\Api\Models\Marketing\MarketingProgram;
 use Piggy\Api\Models\Marketing\MarketingRecipient;
 use Piggy\Api\Resources\BaseResource;
 
@@ -20,16 +18,17 @@ class MarketingRecipientsResource extends BaseResource
     protected $resourceUri = "/api/v2/oauth/clients/marketing-recipients";
 
     /**
-     * @param MarketingProgram $marketingProgram
+     * @param int $marketingProgramId
      * @param string $email
+     *
      * @return MarketingRecipient
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
-    public function get(MarketingProgram $marketingProgram, string $email): MarketingRecipient
+    public function get(int $marketingProgramId, string $email): MarketingRecipient
     {
         $response = $this->client->get($this->resourceUri, [
-            "marketing_program_id" => $marketingProgram->getId(),
+            "marketing_program_id" => $marketingProgramId,
             "email" => $email,
         ]);
 
@@ -39,15 +38,17 @@ class MarketingRecipientsResource extends BaseResource
     }
 
     /**
-     * @param MarketingProgram $marketingProgram
+     * @param int $marketingProgramId
      * @param string $email
+     *
      * @return MarketingRecipient
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
-    public function create(MarketingProgram $marketingProgram, string $email): MarketingRecipient
+    public function create(int $marketingProgramId, string $email): MarketingRecipient
     {
         $response = $this->client->post($this->resourceUri, [
-            "marketing_program_id" => $marketingProgram->getId(),
+            "marketing_program_id" => $marketingProgramId,
             "email" => $email,
         ]);
 
@@ -58,8 +59,10 @@ class MarketingRecipientsResource extends BaseResource
 
     /**
      * @param MarketingRecipient $marketingRecipient
+     *
      * @return MarketingRecipient
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function update(MarketingRecipient $marketingRecipient): MarketingRecipient
     {

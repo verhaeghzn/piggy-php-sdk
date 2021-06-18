@@ -9,19 +9,23 @@ Full documentation about our API can be found here https://docs.piggy.eu/
 ## Setup ##  
 
 **Composer:**
-
+```
 composer require piggy/piggy-php-sdk
+```
 
 ## Quickstart ##  
 
 **Example with Register Client**  
+```
 $apiKey = 'xxxx-xxxx-xxxx';  
 $client = new Piggy\Api\RegisterClient($apiKey);
-
+```
 
 **Example with OAuth Client**  
+```
 $clientId = 'xxxx';
 $clientSecret = 'xxx-xxxxxxx';    
 $client = new Piggy\Api\OAuthClient($clientId, $clientSecret);  
 $access_token = $client->getAccessToken();      
 $client->setAccessToken($access_token);
+```

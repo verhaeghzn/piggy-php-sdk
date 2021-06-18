@@ -2,10 +2,8 @@
 
 namespace Piggy\Api\Resources\OAuth\Loyalty;
 
-use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\Loyalty\StagedCreditReceptionMapper;
 use Piggy\Api\Models\Loyalty\StagedCreditReception;
-use Piggy\Api\Models\Shops\Shop;
 use Piggy\Api\Resources\BaseResource;
 
 /**
@@ -35,17 +33,18 @@ class StagedCreditReceptionsResource extends BaseResource
     }
 
     /**
-     * @param \Piggy\Api\Models\Shops\Shop $shop
+     * @param int $shopId
      * @param int $credits
      * @param float|null $purchaseAmount
-     * @return \Piggy\Api\Models\Loyalty\StagedCreditReception
+     *
+     * @return StagedCreditReception
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
-    public function create(Shop $shop, int $credits, float $purchaseAmount = null): StagedCreditReception
+    public function create(int $shopId, int $credits, float $purchaseAmount = null): StagedCreditReception
     {
         $response = $this->client->post($this->resourceUri, [
-            "shop_id" => $shop->getId(),
+            "shop_id" => $shopId,
             "credits" => $credits,
             "purchase_amount" => $purchaseAmount,
         ]);
@@ -56,16 +55,17 @@ class StagedCreditReceptionsResource extends BaseResource
     }
 
     /**
-     * @param StagedCreditReception $stagedCreditReception
+     * @param int $stagedCreditReceptionId
      * @param string $email
      * @param null $locale
+     *
      * @return \stdClass
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
-    public function send(StagedCreditReception $stagedCreditReception, string $email, $locale = null)
+    public function send(int $stagedCreditReceptionId, string $email, $locale = null)
     {
-        $response = $this->client->post("{$this->resourceUri}/{$stagedCreditReception->getId()}/send", [
+        $response = $this->client->post("{$this->resourceUri}/{$stagedCreditReceptionId}/send", [
             "email" => $email,
             "locale" => $locale
         ]);

@@ -3,9 +3,7 @@
 namespace Piggy\Api\Resources\OAuth\Giftcards;
 
 use Piggy\Api\Mappers\Giftcards\GiftcardTransactionMapper;
-use Piggy\Api\Models\Giftcards\Giftcard;
 use Piggy\Api\Models\Giftcards\GiftcardTransaction;
-use Piggy\Api\Models\Shops\Shop;
 use Piggy\Api\Resources\BaseResource;
 
 /**
@@ -20,20 +18,37 @@ class GiftcardTransactionsResource extends BaseResource
     protected $resourceUri = "/api/v2/oauth/clients/giftcard-transactions";
 
     /**
-     * @param Shop $shop
-     * @param Giftcard $giftcard
-     * @param int $amount
+     * @param int $shopId
+     * @param int $giftcardId
+     * @param int $amountInCents
+     *
      * @return GiftcardTransaction
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
-    public function create(Shop $shop, Giftcard $giftcard, int $amount): GiftcardTransaction
+    public function create(int $shopId, int $giftcardId, int $amountInCents): GiftcardTransaction
     {
         $response = $this->client->post($this->resourceUri, [
-            "shop_id" => $shop->getId(),
-            "giftcard_id" => $giftcard->getId(),
-            "amount" => $amount
+            "shop_id" => $shopId,
+            "giftcard_id" => $giftcardId,
+            "amount" => $amountInCents,
         ]);
+
+        $mapper = new GiftcardTransactionMapper();
+
+        return $mapper->map($response->getData());
+    }
+
+    /**
+     * @param int $giftcardTransactionId
+     *
+     * @return GiftcardTransaction
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
+     */
+    public function correct(int $giftcardTransactionId): GiftcardTransaction
+    {
+        $response = $this->client->post($this->resourceUri . "/correct/{$giftcardTransactionId}", []);
 
         $mapper = new GiftcardTransactionMapper();
 

@@ -2,12 +2,10 @@
 
 namespace Piggy\Api\Resources\OAuth\Loyalty;
 
-use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Mappers\Loyalty\MemberAndCreditBalanceResponseMapper;
 use Piggy\Api\Mappers\Loyalty\MemberMapper;
 use Piggy\Api\Models\Loyalty\Member;
 use Piggy\Api\Models\Loyalty\MemberResponse;
-use Piggy\Api\Models\Shops\Shop;
 use Piggy\Api\Resources\BaseResource;
 
 /**
@@ -22,16 +20,17 @@ class MembersResource extends BaseResource
     protected $resourceUri = "/api/v2/oauth/clients/members";
 
     /**
-     * @param Shop $shop
+     * @param int $shopId
      * @param string $email
+     *
      * @return Member
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
-    public function create(Shop $shop, string $email): Member
+    public function create(int $shopId, string $email): Member
     {
         $response = $this->client->post($this->resourceUri, [
-            "shop_id" => $shop->getId(),
+            "shop_id" => $shopId,
             "email" => $email,
         ]);
 
@@ -41,16 +40,17 @@ class MembersResource extends BaseResource
     }
 
     /**
-     * @param Shop $shop
+     * @param int $shopId
      * @param string $email
+     *
      * @return MemberResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
-    public function findOneBy(Shop $shop, string $email): MemberResponse
+    public function findOneBy(int $shopId, string $email): MemberResponse
     {
         $response = $this->client->get("{$this->resourceUri}/find-one-by", [
-            "shop_id" => $shop->getId(),
+            "shop_id" => $shopId,
             "email" => $email,
         ]);
 
@@ -60,15 +60,17 @@ class MembersResource extends BaseResource
     }
 
     /**
-     * @param Shop $shop
-     * @param int $id
+     * @param int $shopId
+     * @param int $memberId
+     *
      * @return MemberResponse
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
-    public function get(Shop $shop, int $id): MemberResponse
+    public function get(int $shopId, int $memberId): MemberResponse
     {
-        $response = $this->client->get("{$this->resourceUri}/$id", [
-            "shop_id" => $shop->getId(),
+        $response = $this->client->get("{$this->resourceUri}/$memberId", [
+            "shop_id" => $shopId,
         ]);
 
         $mapper = new MemberAndCreditBalanceResponseMapper();

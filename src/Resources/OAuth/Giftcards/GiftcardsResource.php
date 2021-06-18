@@ -4,8 +4,6 @@ namespace Piggy\Api\Resources\OAuth\Giftcards;
 
 use Piggy\Api\Mappers\Giftcards\GiftcardMapper;
 use Piggy\Api\Models\Giftcards\Giftcard;
-use Piggy\Api\Models\Giftcards\GiftcardProgram;
-use Piggy\Api\Models\Shops\Shop;
 use Piggy\Api\Resources\BaseResource;
 
 /**
@@ -20,16 +18,17 @@ class GiftcardsResource extends BaseResource
     protected $resourceUri = "/api/v2/oauth/clients/giftcards";
 
     /**
-     * @param Shop $shop
+     * @param int $shopId
      * @param string $hash
+     *
      * @return Giftcard
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
-    public function findOneBy(Shop $shop, string $hash): Giftcard
+    public function findOneBy(int $shopId, string $hash): Giftcard
     {
         $response = $this->client->get("{$this->resourceUri}/find-one-by", [
-            "shop_id" => $shop->getId(),
+            "shop_id" => $shopId,
             "hash" => $hash,
         ]);
 
@@ -39,18 +38,19 @@ class GiftcardsResource extends BaseResource
     }
 
     /**
-     * @param Shop $shop
-     * @param GiftcardProgram $giftcardProgram
+     * @param int $shopId
+     * @param int $giftcardProgramId
      * @param int $type
+     *
      * @return Giftcard
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
-    public function create(Shop $shop, GiftcardProgram $giftcardProgram, int $type): Giftcard
+    public function create(int $shopId, int $giftcardProgramId, int $type): Giftcard
     {
         $response = $this->client->post($this->resourceUri, [
-            "shop_id" => $shop->getId(),
-            "giftcard_program_id" => $giftcardProgram->getId(),
+            "shop_id" => $shopId,
+            "giftcard_program_id" => $giftcardProgramId,
             "type" => $type
         ]);
 
