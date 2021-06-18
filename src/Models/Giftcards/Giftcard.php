@@ -47,15 +47,16 @@ class Giftcard
 
     /**
      * Giftcard constructor.
+     *
      * @param int $id
      * @param string $hash
      * @param int $type
      * @param bool $active
      * @param bool $upgradeable
-     * @param GiftcardProgram $giftcardProgram
-     * @param null $expirationDate
+     * @param GiftcardProgram|null $giftcardProgram
+     * @param DateTime|null $expirationDate
      */
-    public function __construct(int $id, string $hash, int $type, bool $active, bool $upgradeable, GiftcardProgram $giftcardProgram, $expirationDate = null)
+    public function __construct(int $id, string $hash, int $type, bool $active, bool $upgradeable, ?GiftcardProgram $giftcardProgram, ?DateTime $expirationDate)
     {
         $this->id = $id;
         $this->hash = $hash;
@@ -115,9 +116,9 @@ class Giftcard
     }
 
     /**
-     * @return GiftcardProgram
+     * @return GiftcardProgram|null
      */
-    public function getGiftcardProgram(): GiftcardProgram
+    public function getGiftcardProgram(): ?GiftcardProgram
     {
         return $this->giftcardProgram;
     }

@@ -18,11 +18,12 @@ class GiftcardMapper extends BaseMapper
      */
     public function map(object $data): Giftcard
     {
-        $giftcardProgramMapper = new GiftcardProgramMapper();
-        $giftcardProgram = $giftcardProgramMapper->map($data->giftcard_program);
+        if (isset($data->giftcard_program)) {
+            $giftcardProgramMapper = new GiftcardProgramMapper();
+            $giftcardProgram = $giftcardProgramMapper->map($data->giftcard_program);
+        }
 
-        $expirationDate = null;
-        if($data->expiration_date) {
+        if(isset($data->expiration_date) && !empty($data->expiration_date)) {
             $expirationDate = $this->parseDate($data->expiration_date);
         }
 
@@ -32,11 +33,10 @@ class GiftcardMapper extends BaseMapper
             GiftcardType::byName($data->type)->getValue(),
             $data->active,
             $data->upgradeable,
-            $giftcardProgram,
-            $expirationDate
+            $giftcardProgram ?? null,
+            $expirationDate ?? null
         );
 
         return $giftcard;
     }
-
 }
