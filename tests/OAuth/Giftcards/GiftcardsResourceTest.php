@@ -2,53 +2,28 @@
 
 namespace Piggy\Api\Tests\OAuth\Giftcards;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Piggy\Api\Enum\GiftcardType;
 use Piggy\Api\Exceptions\PiggyRequestException;
-use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Models\Giftcards\Giftcard;
 use Piggy\Api\Models\Giftcards\GiftcardProgram;
-use Piggy\Api\OAuthClient;
 use Piggy\Api\Tests\OAuthTestCase;
 
 /**
  * Class GiftcardsResourceTest
- * @package Piggy\Api\Tests\OAuth\Shops
+ * @package Piggy\Api\Tests\OAuth\Giftcards
  */
 class GiftcardsResourceTest extends OAuthTestCase
 {
-//
-//    /**
-//     * @test
-//     */
-//    public function check_exception()
-//    {
-//        $client = new OAuthClient("211", "bRwQz6duhtxdwUkdgtnk8aMANI8JqLVs9u8ofSn0");
-//        $token = $client->getAccessToken();
-//        $client->setAccessToken($token);
-//        $shop = $client->webshops->get(8466);
-//
-//        $member = $client->members->findOneBy($shop, 'mike@piggy.nl');
-//        $card = $client->loyaltyCards->findOneBy($shop, '20130143197');
-//
-////        $cr = $client->creditReceptions->create($shop, $member->getMember(), $card, null, 1);
-////        $cr2 = $client->creditReceptions->get($cr->getId());
-////        var_dump($cr2);
-//        $stagedCr = $client->stagedCreditReceptions->create($shop, 10, 100);
-//        $stagedCr2 = $client->stagedCreditReceptions->get($stagedCr->getId());
-//        $send = $client->stagedCreditReceptions->send($stagedCr, 'mike@piggy.nl');
-//        var_dump($se);
-//        die();
-//    }
-
     /**
      * @test
-     * @throws RequestException
+     * @throws PiggyRequestException
+     * @throws GuzzleException
      */
     public function it_finds_a_giftcard_by_hash()
     {
-        $shop = $this->createShop();
         $giftcardProgram = new GiftcardProgram(1, "program for test");
-        $giftcard = new Giftcard(1, "giftcard123", GiftcardType::DIGITAL, true, true, $giftcardProgram);
+        $giftcard = new Giftcard(1, "giftcard123", GiftcardType::DIGITAL, true, true, $giftcardProgram, null);
 
         $this->addExpectedResponse([
             "id" => $giftcard->getId(),
@@ -63,7 +38,7 @@ class GiftcardsResourceTest extends OAuthTestCase
             ]
         ]);
 
-        $data = $this->mockedClient->giftcards->findOneBy($shop, "giftcard123");
+        $data = $this->mockedClient->giftcards->findOneBy(1, "giftcard123");
 
         $this->assertEquals($data->getId(), $giftcard->getId());
         $this->assertEquals($data->getHash(), $giftcard->getHash());
@@ -76,13 +51,13 @@ class GiftcardsResourceTest extends OAuthTestCase
 
     /**
      * @test
-     * @throws RequestException
+     * @throws PiggyRequestException
+     * @throws GuzzleException
      */
     public function it_returns_giftcard_after_creation()
     {
-        $shop = $this->createShop();
-        $giftcardProgram = new GiftcardProgram(1, "program for test");
-        $giftcard = new Giftcard(1, "giftcard123", GiftcardType::DIGITAL, true, true, $giftcardProgram);
+        $giftcardProgram = new GiftcardProgram(2, "program for test");
+        $giftcard = new Giftcard(1, "giftcard123", GiftcardType::DIGITAL, true, true, $giftcardProgram, null);
 
         $this->addExpectedResponse([
             "id" => $giftcard->getId(),
@@ -97,7 +72,7 @@ class GiftcardsResourceTest extends OAuthTestCase
             ]
         ]);
 
-        $data = $this->mockedClient->giftcards->create($shop, $giftcardProgram, GiftcardType::DIGITAL);
+        $data = $this->mockedClient->giftcards->create(1, 2, GiftcardType::DIGITAL);
 
         $this->assertEquals($data->getId(), $giftcard->getId());
         $this->assertEquals($data->getHash(), $giftcard->getHash());

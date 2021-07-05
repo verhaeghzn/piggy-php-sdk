@@ -2,7 +2,8 @@
 
 namespace Piggy\Api\Tests\OAuth\Loyalty;
 
-use Piggy\Api\Exceptions\RequestException;
+use GuzzleHttp\Exception\GuzzleException;
+use Piggy\Api\Exceptions\PiggyRequestException;
 use Piggy\Api\Models\Loyalty\CreditBalance;
 use Piggy\Api\Tests\OAuthTestCase;
 
@@ -14,17 +15,17 @@ class MembersResourceTest extends OAuthTestCase
 {
     /**
      * @test
-     * @throws RequestException
+     * @throws GuzzleException
+     * @throws PiggyRequestException
      */
     public function it_returns_the_member_after_creation()
     {
-        $shop = $this->createShop();
         $this->addExpectedResponse([
             "id" => 1,
             "email" => "new@piggy.nl",
         ]);
 
-        $data = $this->mockedClient->members->create($shop, 'new@piggy.nl');
+        $data = $this->mockedClient->members->create(1, 'new@piggy.nl');
 
         $this->assertEquals(1, $data->getId());
         $this->assertEquals("new@piggy.nl", $data->getEmail());
@@ -36,7 +37,6 @@ class MembersResourceTest extends OAuthTestCase
     public function it_returns_member_by_email()
     {
         $member = $this->createMember();
-        $shop = $this->createShop();
         $creditBalance = new CreditBalance($member, 100);
 
         $this->addExpectedResponse([
@@ -49,7 +49,7 @@ class MembersResourceTest extends OAuthTestCase
             ],
         ]);
 
-        $data = $this->mockedClient->members->findOneBy($shop, $member->getEmail());
+        $data = $this->mockedClient->members->findOneBy(1, $member->getEmail());
 
         $this->assertEquals($member->getEmail(), $data->getMember()->getEmail());
         $this->assertEquals($creditBalance->getBalance(), $data->getCreditBalance()->getBalance());
@@ -61,7 +61,6 @@ class MembersResourceTest extends OAuthTestCase
     public function it_returns_member_by_id()
     {
         $member = $this->createMember();
-        $shop = $this->createShop();
 
         $creditBalance = new CreditBalance($member, 100);
         $this->addExpectedResponse([
@@ -75,7 +74,7 @@ class MembersResourceTest extends OAuthTestCase
             ],
         ]);
 
-        $data = $this->mockedClient->members->findOneBy($shop, "piggy@piggy.nl");
+        $data = $this->mockedClient->members->findOneBy(1, "piggy@piggy.nl");
 
         $this->assertEquals($member->getEmail(), $data->getMember()->getEmail());
         $this->assertEquals($creditBalance->getBalance(), $data->getCreditBalance()->getBalance());

@@ -3,8 +3,9 @@
 namespace Piggy\Api\Tests\OAuth\Loyalty;
 
 use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use Piggy\Api\Exceptions\InputInvalidException;
-use Piggy\Api\Exceptions\RequestException;
+use Piggy\Api\Exceptions\PiggyRequestException;
 use Piggy\Api\Models\Loyalty\CreditReception;
 use Piggy\Api\Tests\OAuthTestCase;
 
@@ -16,7 +17,8 @@ class CreditReceptionsResourceTest extends OAuthTestCase
 {
     /**
      * @test
-     * @throws RequestException
+     * @throws GuzzleException
+     * @throws PiggyRequestException
      * @throws Exception
      */
     public function it_returns_a_credit_reception()
@@ -40,32 +42,25 @@ class CreditReceptionsResourceTest extends OAuthTestCase
 
     /**
      * @test
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Piggy\Api\Exceptions\InputInvalidException
-     * @throws \Piggy\Api\Exceptions\PiggyRequestException
+     * @throws GuzzleException
+     * @throws InputInvalidException
+     * @throws PiggyRequestException
      */
     public function it_throws_input_invalid_exception_when_member_and_loyalty_card_is_missing()
     {
-        $shop = $this->createShop();
-
         $this->expectExceptionMessage("Member or LoyaltyCard is required");
-
-        $data = $this->mockedClient->creditReceptions->create($shop, null, null, 1, 1);
+        $this->mockedClient->creditReceptions->create(1, null, null, 1, 1);
     }
 
     /**
      * @test
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Piggy\Api\Exceptions\InputInvalidException
-     * @throws \Piggy\Api\Exceptions\PiggyRequestException
+     * @throws GuzzleException
+     * @throws InputInvalidException
+     * @throws PiggyRequestException
      */
     public function it_throws_input_invalid_exception_when_credits_and_purchase_amount_is_missing()
     {
-        $shop = $this->createShop();
-        $member = $this->createMember();
-
         $this->expectExceptionMessage("Purchase amount or credits is required");
-
-        $data = $this->mockedClient->creditReceptions->create($shop, $member);
+        $this->mockedClient->creditReceptions->create(1, 2);
     }
 }

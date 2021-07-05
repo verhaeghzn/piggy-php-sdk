@@ -4,7 +4,6 @@ namespace Piggy\Api\Tests\OAuth\Loyalty\Rewards;
 
 use Piggy\Api\Enum\CardStatus;
 use Piggy\Api\Enum\CardType;
-use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Models\Loyalty\LoyaltyCard;
 use Piggy\Api\Models\Loyalty\RewardReceptions\PhysicalRewardReception;
 use Piggy\Api\Models\Loyalty\Rewards\PhysicalReward;
@@ -18,12 +17,12 @@ class PhysicalRewardReceptionTest extends OAuthTestCase
 {
     /**
      * @test
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function it_returns_a_physical_reward_reception()
     {
         $member = $this->createMember();
-        $shop = $this->createShop();
         $physicalReward = new PhysicalReward(1, "test reward");
         $physicalRewardReception = new PhysicalRewardReception(1, "test reward reception", 100, $member,
             $physicalReward);
@@ -42,8 +41,7 @@ class PhysicalRewardReceptionTest extends OAuthTestCase
             ],
         ]);
 
-        $loyaltyCard = new LoyaltyCard(1, "1234", CardType::PHYSICAL, CardStatus::ACTIVE, $member);
-        $data = $this->mockedClient->physicalRewardReceptions->create($shop, $physicalReward, $loyaltyCard);
+        $data = $this->mockedClient->physicalRewardReceptions->create(1, 2, 3);
 
         $this->assertEquals($data->getId(), $physicalRewardReception->getId());
         $this->assertEquals($data->getCredits(), $physicalRewardReception->getCredits());

@@ -14,7 +14,8 @@ class WebshopsResourceTest extends OAuthTestCase
 {
     /**
      * @test
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function it_returns_all_webshops()
     {

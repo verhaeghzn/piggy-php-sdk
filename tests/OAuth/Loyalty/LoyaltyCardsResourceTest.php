@@ -2,10 +2,10 @@
 
 namespace Piggy\Api\Tests\OAuth\Loyalty;
 
-use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use Piggy\Api\Enum\CardStatus;
 use Piggy\Api\Enum\CardType;
-use Piggy\Api\Exceptions\RequestException;
+use Piggy\Api\Exceptions\PiggyRequestException;
 use Piggy\Api\Models\Loyalty\LoyaltyCard;
 use Piggy\Api\Tests\OAuthTestCase;
 
@@ -17,8 +17,8 @@ class LoyaltyCardsResourceTest extends OAuthTestCase
 {
     /**
      * @test
-     * @throws RequestException
-     * @throws Exception
+     * @throws GuzzleException
+     * @throws PiggyRequestException
      */
     public function it_returns_a_loyalty_card()
     {
@@ -37,7 +37,7 @@ class LoyaltyCardsResourceTest extends OAuthTestCase
             ],
         ]);
 
-        $data = $this->mockedClient->loyaltyCards->findOneBy($shop, "1234");
+        $data = $this->mockedClient->loyaltyCards->findOneBy(1, "1234");
 
         $this->assertEquals($data->getId(), $loyaltyCard->getId());
         $this->assertEquals($data->getHash(), $loyaltyCard->getHash());
@@ -50,12 +50,12 @@ class LoyaltyCardsResourceTest extends OAuthTestCase
 
     /**
      * @test
-     * @throws RequestException
+     * @throws GuzzleException
+     * @throws PiggyRequestException
      */
     public function it_returns_a_loyalty_card_after_linking()
     {
         $member = $this->createMember();
-        $shop = $this->createShop();
         $loyaltyCard = new LoyaltyCard(1, "1234", CardType::PHYSICAL, CardStatus::ACTIVE, $member);
 
         $this->addExpectedResponse([
@@ -69,7 +69,7 @@ class LoyaltyCardsResourceTest extends OAuthTestCase
             ],
         ]);
 
-        $data = $this->mockedClient->loyaltyCards->link($shop, $member, $loyaltyCard);
+        $data = $this->mockedClient->loyaltyCards->link(1, $member, $loyaltyCard);
 
         $this->assertEquals($data->getId(), $loyaltyCard->getId());
         $this->assertEquals($data->getHash(), $loyaltyCard->getHash());

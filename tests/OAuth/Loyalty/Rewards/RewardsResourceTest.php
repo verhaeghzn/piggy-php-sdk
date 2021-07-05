@@ -2,7 +2,6 @@
 
 namespace Piggy\Api\Tests\OAuth\Loyalty\Rewards;
 
-use Piggy\Api\Exceptions\RequestException;
 use Piggy\Api\Models\Loyalty\Rewards\DigitalReward;
 use Piggy\Api\Models\Loyalty\Rewards\ExternalReward;
 use Piggy\Api\Models\Loyalty\Rewards\PhysicalReward;
@@ -16,7 +15,8 @@ class RewardsResourceTest extends OAuthTestCase
 {
     /**
      * @test
-     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Piggy\Api\Exceptions\PiggyRequestException
      */
     public function it_returns_all_rewards()
     {
@@ -79,7 +79,7 @@ class RewardsResourceTest extends OAuthTestCase
             ]
         ]);
 
-        $data = $this->mockedClient->rewards->all($shop);
+        $data = $this->mockedClient->rewards->all(1);
 
         $physicalRewards = $data["physical"];
         $digitalRewards = $data["digital"];

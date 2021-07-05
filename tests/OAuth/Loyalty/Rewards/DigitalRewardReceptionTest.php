@@ -2,10 +2,8 @@
 
 namespace Piggy\Api\Tests\OAuth\Loyalty\Rewards;
 
-use Piggy\Api\Enum\CardStatus;
-use Piggy\Api\Enum\CardType;
-use Piggy\Api\Exceptions\RequestException;
-use Piggy\Api\Models\Loyalty\LoyaltyCard;
+use GuzzleHttp\Exception\GuzzleException;
+use Piggy\Api\Exceptions\PiggyRequestException;
 use Piggy\Api\Models\Loyalty\RewardReceptions\DigitalRewardReception;
 use Piggy\Api\Models\Loyalty\Rewards\DigitalReward;
 use Piggy\Api\Tests\OAuthTestCase;
@@ -18,12 +16,12 @@ class DigitalRewardReceptionTest extends OAuthTestCase
 {
     /**
      * @test
-     * @throws RequestException
+     * @throws GuzzleException
+     * @throws PiggyRequestException
      */
     public function it_returns_a_digital_reward_reception()
     {
         $member = $this->createMember();
-        $shop = $this->createShop();
         $digitalReward = new DigitalReward(1, "test reward");
         $digitalRewardReception = new DigitalRewardReception(1, "test reward reception", 100, $member, $digitalReward);
 
@@ -41,8 +39,7 @@ class DigitalRewardReceptionTest extends OAuthTestCase
             ],
         ]);
 
-        $loyaltyCard = new LoyaltyCard(1, "1234", CardType::PHYSICAL, CardStatus::ACTIVE, $member);
-        $data = $this->mockedClient->digitalRewardReceptions->create($shop, $digitalReward, $loyaltyCard);
+        $data = $this->mockedClient->digitalRewardReceptions->create(1, 2, 3);
 
         $this->assertEquals($data->getId(), $digitalRewardReception->getId());
         $this->assertEquals($data->getCredits(), $digitalRewardReception->getCredits());

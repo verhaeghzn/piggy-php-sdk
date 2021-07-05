@@ -3,7 +3,8 @@
 namespace Piggy\Api\Tests\OAuth\Marketing;
 
 use DateTimeInterface;
-use Piggy\Api\Exceptions\RequestException;
+use GuzzleHttp\Exception\GuzzleException;
+use Piggy\Api\Exceptions\PiggyRequestException;
 use Piggy\Api\Models\Marketing\MarketingProgram;
 use Piggy\Api\Models\Marketing\MarketingRecipient;
 use Piggy\Api\Tests\OAuthTestCase;
@@ -16,7 +17,8 @@ class MarketingRecipientsResourceTest extends OAuthTestCase
 {
     /**
      * @test
-     * @throws RequestException
+     * @throws GuzzleException
+     * @throws PiggyRequestException
      */
     public function it_returns_a_marketing_recipient_by_email()
     {
@@ -30,7 +32,7 @@ class MarketingRecipientsResourceTest extends OAuthTestCase
             "created_at" => $marketingRecipient->getCreatedAt()->format(DateTimeInterface::ATOM)
         ]);
 
-        $data = $this->mockedClient->marketingRecipients->get($marketingProgram, "test@piggy.nl");
+        $data = $this->mockedClient->marketingRecipients->get(1, "test@piggy.nl");
 
         $this->assertEquals($data->getId(), $marketingRecipient->getId());
         $this->assertEquals($data->getEmail(), $marketingRecipient->getEmail());
@@ -39,7 +41,8 @@ class MarketingRecipientsResourceTest extends OAuthTestCase
 
     /**
      * @test
-     * @throws RequestException
+     * @throws GuzzleException
+     * @throws PiggyRequestException
      */
     public function it_returns_a_marketing_recipient_after_creation()
     {
@@ -53,7 +56,7 @@ class MarketingRecipientsResourceTest extends OAuthTestCase
             "created_at" => $marketingRecipient->getCreatedAt()->format(DateTimeInterface::ATOM)
         ]);
 
-        $data = $this->mockedClient->marketingRecipients->create($marketingProgram, "test@piggy.nl");
+        $data = $this->mockedClient->marketingRecipients->create(1, "test@piggy.nl");
 
         $this->assertEquals($data->getId(), $marketingRecipient->getId());
         $this->assertEquals($data->getEmail(), $marketingRecipient->getEmail());
@@ -62,7 +65,8 @@ class MarketingRecipientsResourceTest extends OAuthTestCase
 
     /**
      * @test
-     * @throws RequestException
+     * @throws GuzzleException
+     * @throws PiggyRequestException
      */
     public function it_returns_a_marketing_recipient_after_update()
     {
