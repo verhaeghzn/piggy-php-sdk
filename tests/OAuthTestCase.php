@@ -2,6 +2,7 @@
 
 namespace Piggy\Api\Tests;
 
+use Piggy\Api\Exceptions\MaintenanceModeException;
 use Piggy\Api\OAuthClient;
 
 /**
@@ -30,5 +31,13 @@ class OAuthTestCase extends BaseTestCase
         parent::tearDown();
 
         $this->mockHandler->reset();
+    }
+
+    /** @test */
+    public function throws_maintenance_mode_exception()
+    {
+        $this->addExpectedResponse([], null, 503);
+        $this->expectException(MaintenanceModeException::class);
+        $this->mockedClient->webshops->get(1);
     }
 }

@@ -7,11 +7,9 @@ use DateTimeInterface;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
-use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\Response;
-use Piggy\Api\Enum\GiftcardType;
+use PHPUnit\Framework\TestCase;
 use Piggy\Api\Enum\ShopType;
-use Piggy\Api\Models\Giftcards\Giftcard;
 use Piggy\Api\Models\Loyalty\LoyaltyProgram;
 use Piggy\Api\Models\Loyalty\Member;
 use Piggy\Api\Models\Shops\PhysicalShop;
@@ -20,7 +18,7 @@ use Piggy\Api\Models\Shops\Webshop;
 
 /**
  * Class BaseTestCase
- * @package Tests
+ * @package Piggy\Api\Tests
  */
 class BaseTestCase extends TestCase
 {
