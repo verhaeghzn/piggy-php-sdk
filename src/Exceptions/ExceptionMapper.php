@@ -20,6 +20,11 @@ class ExceptionMapper
     public function map(GuzzleException $guzzleException)
     {
         if (method_exists($guzzleException, 'hasResponse') && method_exists($guzzleException, 'getResponse')) {
+
+            if ($guzzleException->getResponse()->getStatusCode() == 503) {
+                throw new MaintenanceModeException("Piggy system is in maintenance mode.", 503);
+            }
+
             if(property_exists($guzzleException->getResponse(), 'getBody')) {
                 $body = $guzzleException->getResponse()->getBody();
                 $body = @json_decode($body);
