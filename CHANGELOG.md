@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0
+
+- feat: handle maintenance mode response
+
 ## 1.0.0
 
  First stable version.
