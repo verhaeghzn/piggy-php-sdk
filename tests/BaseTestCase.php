@@ -5,9 +5,7 @@ namespace Piggy\Api\Tests;
 use DateTime;
 use DateTimeInterface;
 use GuzzleHttp\Client as HttpClient;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
+
 use PHPUnit\Framework\TestCase;
 use Piggy\Api\Enum\ShopType;
 use Piggy\Api\Models\Loyalty\LoyaltyProgram;
@@ -15,6 +13,7 @@ use Piggy\Api\Models\Loyalty\Member;
 use Piggy\Api\Models\Shops\PhysicalShop;
 use Piggy\Api\Models\Shops\Shop;
 use Piggy\Api\Models\Shops\Webshop;
+use function Piggy\Api\hasGuzzle5;
 
 /**
  * Class BaseTestCase
@@ -39,9 +38,14 @@ class BaseTestCase extends TestCase
     {
         parent::setUp();
 
-        $mock = new MockHandler();
-        $handlerStack = HandlerStack::create($mock);
-        $httpClient = new HttpClient(['handler' => $handlerStack]);
+        if (hasGuzzle5()) {
+            $mock = new MockHandlerAdapter();
+            $httpClient = new HttpClient(['handler' => $mock]);
+        } else {
+            $mock = new \GuzzleHttp\Handler\MockHandler();
+            $handlerStack = \GuzzleHttp\HandlerStack::create($mock);
+            $httpClient = new HttpClient(['handler' => $handlerStack]);
+        }
 
         $this->httpClient = $httpClient;
         $this->mockHandler = $mock;
@@ -54,10 +58,21 @@ class BaseTestCase extends TestCase
      */
     protected function addExpectedResponse(array $data, array $meta = null, int $code = 200)
     {
-        $response = new Response($code, [], json_encode([
+        $payload = json_encode([
             "data" => $data,
             "meta" => $meta
-        ]));
+        ]);
+
+        if (hasGuzzle5()) {
+            $stream = fopen('php://memory','r+');
+            fwrite($stream, $payload);
+            rewind($stream);
+
+            $streamWrapper = new \GuzzleHttp\Stream\Stream($stream);
+            $response = new \GuzzleHttp\Message\Response($code, [], $streamWrapper);
+        } else {
+            $response = new \GuzzleHttp\Psr7\Response($code, [], $payload);
+        }
 
         $this->mockHandler->append($response);
     }
@@ -82,7 +97,7 @@ class BaseTestCase extends TestCase
     /**
      * @return MockHandler
      */
-    public function getMockHandler(): MockHandler
+    public function getMockHandler()
     {
         return $this->mockHandler;
     }
