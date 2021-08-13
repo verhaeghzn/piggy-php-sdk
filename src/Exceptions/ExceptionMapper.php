@@ -2,6 +2,7 @@
 
 namespace Piggy\Api\Exceptions;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use stdClass;
 use Throwable;
@@ -13,29 +14,29 @@ use Throwable;
 class ExceptionMapper
 {
     /**
-     * @param GuzzleException $guzzleException
-     * @return GuzzleException
+     * @param Exception $exception
+     * @return Exception
      * @throws PiggyRequestException
      */
-    public function map(GuzzleException $guzzleException)
+    public function map(Exception $exception)
     {
-        if (method_exists($guzzleException, 'hasResponse') && method_exists($guzzleException, 'getResponse')) {
+        if (method_exists($exception, 'hasResponse') && method_exists($exception, 'getResponse')) {
 
-            if ($guzzleException->getResponse()->getStatusCode() == 503) {
+            if ($exception->getResponse()->getStatusCode() == 503) {
                 throw new MaintenanceModeException("Piggy system is in maintenance mode.", 503);
             }
 
-            if(property_exists($guzzleException->getResponse(), 'getBody')) {
-                $body = $guzzleException->getResponse()->getBody();
+            if(property_exists($exception->getResponse(), 'getBody')) {
+                $body = $exception->getResponse()->getBody();
                 $body = @json_decode($body);
 
                 if ($this->isPiggyException($body)) {
-                    throw $this->mapPiggyException($body, $guzzleException);
+                    throw $this->mapPiggyException($body, $exception);
                 }
             }
         }
 
-        return $guzzleException;
+        return $exception;
     }
 
     /**

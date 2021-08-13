@@ -6,13 +6,13 @@ use Exception;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
-use Piggy\Api\Exceptions\MalformedResponseException;
 use Piggy\Api\Exceptions\ExceptionMapper;
+use Piggy\Api\Exceptions\MalformedResponseException;
 use Piggy\Api\Exceptions\PiggyRequestException;
 use Piggy\Api\Http\Responses\AuthenticationResponse;
 use Piggy\Api\Http\Responses\Response;
-use Psr\Http\Message\ResponseInterface;
 use Throwable;
+use function Piggy\Api\hasGuzzle5;
 
 /**
  * Class BaseClient
@@ -55,8 +55,7 @@ abstract class BaseClient
      * @param string $endpoint
      * @param array $queryOptions
      * @return Response
-     * @throws GuzzleException
-     * @throws PiggyRequestException
+     * @throws PiggyRequestException|Exception
      */
     public function request(string $method, string $endpoint, $queryOptions = []): Response
     {
@@ -67,7 +66,7 @@ abstract class BaseClient
         $url = $this->baseUrl . $endpoint;
 
         try {
-            $rawResponse = $this->httpClient->request($method, $url, [
+            $rawResponse = $this->getResponse($method, $url, [
                 "headers" => $this->headers,
                 "form_params" => $queryOptions,
             ]);
@@ -75,18 +74,18 @@ abstract class BaseClient
             $response = $this->parseResponse($rawResponse);
 
             return $response;
-        } catch (GuzzleException $e) {
+        } catch (Exception $e) {
             $exceptionMapper = new ExceptionMapper();
             throw $exceptionMapper->map($e);
         }
     }
 
     /**
-     * @param ResponseInterface $response
+     * @param Psr\Http\Message\ResponseInterface|\GuzzleHttp\Message\ResponseInterface $response
      * @return Response
      * @throws Exception
      */
-    private function parseResponse(ResponseInterface $response): Response
+    private function parseResponse($response): Response
     {
         try {
             $content = json_decode($response->getBody()->getContents());
@@ -109,15 +108,14 @@ abstract class BaseClient
      * @param string $endpoint
      * @param array $queryOptions
      * @return AuthenticationResponse
-     * @throws GuzzleException
-     * @throws PiggyRequestException
+     * @throws PiggyRequestException|Exception
      */
     public function authenticationRequest(string $endpoint, $queryOptions = []): AuthenticationResponse
     {
         $url = $this->baseUrl . $endpoint;
 
         try {
-            $rawResponse = $this->httpClient->request("POST", $url, [
+            $rawResponse = $this->getResponse("POST", $url, [
                 "headers" => $this->headers,
                 "form_params" => $queryOptions,
             ]);
@@ -125,7 +123,7 @@ abstract class BaseClient
             $content = json_decode($rawResponse->getBody()->getContents());
 
             return new AuthenticationResponse($content);
-        } catch (GuzzleException $e) {
+        } catch (Exception $e) {
             $exceptionMapper = new ExceptionMapper();
             throw $exceptionMapper->map($e);
         }
@@ -204,5 +202,23 @@ abstract class BaseClient
         }
 
         return $this->request('GET', $url);
+    }
+
+    private function getResponse($method, $url, $options = [])
+    {
+        if (hasGuzzle5()) {
+            // v5 does not have form_params, so we need to apply a trick.
+            if (isset($options['form_params'])) {
+                $options['body'] = http_build_query($options['form_params']);
+                unset($options['form_params']);
+
+                $options['headers']['Content-Type'] = 'application/x-www-form-urlencoded';
+            }
+
+            $request = $this->httpClient->createRequest($method, $url, $options);
+            return $this->httpClient->send($request);
+        }
+
+        return $this->httpClient->request($method, $url, $options);
     }
 }
