@@ -46,6 +46,11 @@ class Giftcard
     protected $giftcardProgram;
 
     /**
+     * @var int
+     */
+    protected $amount_in_cents;
+
+    /**
      * Giftcard constructor.
      *
      * @param int $id
@@ -56,13 +61,14 @@ class Giftcard
      * @param GiftcardProgram|null $giftcardProgram
      * @param DateTime|null $expirationDate
      */
-    public function __construct(int $id, string $hash, int $type, bool $active, bool $upgradeable, ?GiftcardProgram $giftcardProgram, ?DateTime $expirationDate)
+    public function __construct(int $id, string $hash, int $type, bool $active, bool $upgradeable, int $amount_in_cents, ?GiftcardProgram $giftcardProgram, ?DateTime $expirationDate)
     {
         $this->id = $id;
         $this->hash = $hash;
         $this->type = $type;
         $this->active = $active;
         $this->upgradeable = $upgradeable;
+        $this->amount_in_cents = $amount_in_cents;
         $this->giftcardProgram = $giftcardProgram;
         $this->expirationDate = $expirationDate;
     }
@@ -113,6 +119,14 @@ class Giftcard
     public function isUpgradeable(): bool
     {
         return $this->upgradeable;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAmount(): int
+    {
+        return $this->amount_in_cents;
     }
 
     /**
